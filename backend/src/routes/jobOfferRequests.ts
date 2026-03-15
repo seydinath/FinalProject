@@ -8,6 +8,8 @@ import { createNotification } from '../services/notification'
 
 const router = Router()
 
+const OTHER_JOB_TITLE_VALUES = new Set(['__other__', 'other', 'autre'])
+
 // ✅ Create job offer request (recruiter)
 router.post('/request', authenticateToken, async (req: AuthRequest, res: Response) => {
   try {
@@ -19,6 +21,7 @@ router.post('/request', authenticateToken, async (req: AuthRequest, res: Respons
     const {
       companyName,
       jobTitle,
+      customJobTitle,
       location,
       salary,
       numberOfPositions,
@@ -27,14 +30,23 @@ router.post('/request', authenticateToken, async (req: AuthRequest, res: Respons
       description,
     } = req.body
 
-    if (!companyName || !jobTitle || !location || !salary || !numberOfPositions || !jobDuration) {
+    const normalizedJobTitle = typeof jobTitle === 'string' ? jobTitle.trim() : ''
+    const normalizedCustomJobTitle = typeof customJobTitle === 'string' ? customJobTitle.trim() : ''
+    const useCustomJobTitle = OTHER_JOB_TITLE_VALUES.has(normalizedJobTitle.toLowerCase())
+    const resolvedJobTitle = useCustomJobTitle ? normalizedCustomJobTitle : normalizedJobTitle
+
+    if (!companyName || !resolvedJobTitle || !location || !salary || !numberOfPositions || !jobDuration) {
       return res.status(400).json({ error: 'Missing required fields' })
+    }
+
+    if (resolvedJobTitle.length < 3 || resolvedJobTitle.length > 140) {
+      return res.status(400).json({ error: 'Job title must be between 3 and 140 characters' })
     }
 
     const jobOfferRequest = new JobOfferRequest({
       recruiterId: req.userId,
       companyName,
-      jobTitle,
+      jobTitle: resolvedJobTitle,
       location,
       salary,
       numberOfPositions,

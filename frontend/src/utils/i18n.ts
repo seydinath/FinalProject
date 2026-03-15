@@ -408,6 +408,7 @@ export const jobTitleOptions = {
     'Chauffeur',
     'Agent de Securite',
     'Technicien Maintenance',
+    'Autre',
   ],
   en: [
     'Frontend Developer',
@@ -430,5 +431,6 @@ export const jobTitleOptions = {
     'Driver',
     'Security Agent',
     'Maintenance Technician',
+    'Other',
   ]
 }

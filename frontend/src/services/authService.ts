@@ -38,7 +38,9 @@ export interface UserProfile {
 }
 
 export interface AuthResponse {
-  token: string
+  token?: string
+  message?: string
+  requiresEmailVerification?: boolean
   user: {
     id: string
     email: string
@@ -46,8 +48,16 @@ export interface AuthResponse {
     userType: 'job_seeker' | 'recruiter' | 'admin'
     isAdmin?: boolean
     avatar?: string
+    isVerified?: boolean
     profile?: UserProfile
   }
+}
+
+export interface RegisterResponse {
+  token?: string
+  message?: string
+  requiresEmailVerification?: boolean
+  user?: AuthResponse['user']
 }
 
 export interface MeResponse {
@@ -57,6 +67,7 @@ export interface MeResponse {
   userType: 'job_seeker' | 'recruiter' | 'admin'
   isAdmin?: boolean
   avatar?: string
+  isVerified?: boolean
   profile?: UserProfile
 }
 
@@ -75,31 +86,33 @@ export async function loginUser(credentials: LoginCredentials): Promise<AuthResp
 
   if (response.success && response.data) {
     // Stocker le token
-    setAuthToken(response.data.token)
+    if (response.data.token) {
+      setAuthToken(response.data.token)
+    }
     return response.data
   }
 
-  console.error('Login error:', response.error)
-  return null
+  throw new Error(response.error || 'Login failed')
 }
 
 /**
  * Inscription utilisateur
  */
-export async function registerUser(credentials: RegisterCredentials): Promise<AuthResponse | null> {
-  const response = await apiRequest<AuthResponse>('/auth/register', {
+export async function registerUser(credentials: RegisterCredentials): Promise<RegisterResponse | null> {
+  const response = await apiRequest<RegisterResponse>('/auth/register', {
     method: 'POST',
     body: credentials
   })
 
   if (response.success && response.data) {
-    // Stocker le token
-    setAuthToken(response.data.token)
+    // Stocker le token uniquement si présent (fallback sans verification email)
+    if (response.data.token) {
+      setAuthToken(response.data.token)
+    }
     return response.data
   }
 
-  console.error('Register error:', response.error)
-  return null
+  throw new Error(response.error || 'Registration failed')
 }
 
 /**
@@ -112,12 +125,41 @@ export async function googleLoginUser(payload: GoogleLoginPayload): Promise<Auth
   })
 
   if (response.success && response.data) {
-    setAuthToken(response.data.token)
+    if (response.data.token) {
+      setAuthToken(response.data.token)
+    }
     return response.data
   }
 
-  console.error('Google login error:', response.error)
-  return null
+  throw new Error(response.error || 'Google sign-in failed')
+}
+
+export async function verifyEmailToken(token: string): Promise<boolean> {
+  const response = await apiRequest<{ message: string }>('/auth/verify-email', {
+    method: 'POST',
+    body: { token },
+    token: '',
+  })
+
+  if (response.success) {
+    return true
+  }
+
+  throw new Error(response.error || 'Email verification failed')
+}
+
+export async function resendVerificationEmail(email: string): Promise<boolean> {
+  const response = await apiRequest<{ message: string }>('/auth/resend-verification-email', {
+    method: 'POST',
+    body: { email },
+    token: '',
+  })
+
+  if (response.success) {
+    return true
+  }
+
+  throw new Error(response.error || 'Failed to resend verification email')
 }
 
 /**
@@ -181,6 +223,8 @@ export default {
   loginUser,
   registerUser,
   googleLoginUser,
+  verifyEmailToken,
+  resendVerificationEmail,
   logoutUser,
   getStoredUser,
   storeUser,

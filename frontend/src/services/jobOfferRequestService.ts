@@ -3,6 +3,7 @@ import { apiRequest } from './apiClient'
 export interface JobOfferRequestData {
   companyName: string
   jobTitle: string
+  customJobTitle?: string
   location: string
   salary: number
   numberOfPositions: number

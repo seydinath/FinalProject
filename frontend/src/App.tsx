@@ -58,6 +58,12 @@ function AppContent() {
   usePageSEO()
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('verifyEmailToken') && currentPage !== 'auth') {
+      navigateTo('auth')
+      return
+    }
+
     // Admin-only pages list
     const adminPages = ['admin-dashboard', 'admin-job-requests', 'user-management', 'analytics', 'reports']
     const recruiterPages = ['talent-search', 'recruiter-applications']

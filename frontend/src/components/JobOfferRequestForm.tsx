@@ -4,6 +4,8 @@ import { useLanguage } from '../utils/LanguageContext'
 import { jobTitleOptions, locationOptions } from '../utils/i18n'
 import '../styles/forms.css'
 
+const OTHER_JOB_TITLE_VALUE = '__other__'
+
 interface JobOfferRequestFormProps {
   onSuccess?: () => void
   onClose?: () => void
@@ -17,6 +19,7 @@ export const JobOfferRequestForm: React.FC<JobOfferRequestFormProps> = ({ onSucc
   const [formData, setFormData] = useState({
     companyName: '',
     jobTitle: '',
+    customJobTitle: '',
     location: '',
     salary: '',
     numberOfPositions: '',
@@ -39,8 +42,11 @@ export const JobOfferRequestForm: React.FC<JobOfferRequestFormProps> = ({ onSucc
     setSuccess(false)
     setLoading(true)
 
+    const isOtherJobTitle = formData.jobTitle === OTHER_JOB_TITLE_VALUE
+    const resolvedJobTitle = isOtherJobTitle ? formData.customJobTitle.trim() : formData.jobTitle.trim()
+
     // Validation
-    if (!formData.companyName || !formData.jobTitle || !formData.location || !formData.salary || !formData.numberOfPositions) {
+    if (!formData.companyName || !resolvedJobTitle || !formData.location || !formData.salary || !formData.numberOfPositions) {
       setError('Veuillez remplir tous les champs obligatoires')
       setLoading(false)
       return
@@ -49,7 +55,8 @@ export const JobOfferRequestForm: React.FC<JobOfferRequestFormProps> = ({ onSucc
     try {
       const result = await submitJobOfferRequest({
         companyName: formData.companyName,
-        jobTitle: formData.jobTitle,
+        jobTitle: resolvedJobTitle,
+        customJobTitle: isOtherJobTitle ? formData.customJobTitle.trim() : undefined,
         location: formData.location,
         salary: parseInt(formData.salary),
         numberOfPositions: parseInt(formData.numberOfPositions),
@@ -63,6 +70,7 @@ export const JobOfferRequestForm: React.FC<JobOfferRequestFormProps> = ({ onSucc
         setFormData({
           companyName: '',
           jobTitle: '',
+          customJobTitle: '',
           location: '',
           salary: '',
           numberOfPositions: '',
@@ -125,8 +133,29 @@ export const JobOfferRequestForm: React.FC<JobOfferRequestFormProps> = ({ onSucc
             {(jobTitleOptions[language as 'fr' | 'en'] || jobTitleOptions.fr).map((jobTitle) => (
               <option key={jobTitle} value={jobTitle}>{jobTitle}</option>
             ))}
+            <option value={OTHER_JOB_TITLE_VALUE}>{language === 'fr' ? 'Autre' : 'Other'}</option>
           </select>
         </div>
+
+        {formData.jobTitle === OTHER_JOB_TITLE_VALUE && (
+          <div className="form-group">
+            <label htmlFor="customJobTitle">{language === 'fr' ? 'Titre du poste' : 'Job title'} *</label>
+            <input
+              id="customJobTitle"
+              type="text"
+              name="customJobTitle"
+              value={formData.customJobTitle}
+              onChange={handleChange}
+              placeholder={language === 'fr' ? 'Ex: Responsable Logistique' : 'Ex: Logistics Manager'}
+              required
+              minLength={3}
+              maxLength={140}
+            />
+            <small className="form-help-text">
+              {language === 'fr' ? 'Saisissez le titre exact du poste a publier.' : 'Enter the exact job title to publish.'}
+            </small>
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="location">Lieu *</label>

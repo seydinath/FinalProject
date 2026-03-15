@@ -10,10 +10,14 @@ type SendEmailInput = {
 
 let transporterCache: nodemailer.Transporter | null = null
 
+export function isEmailServiceConfigured(): boolean {
+  return Boolean(config.emailHost && config.emailPort && config.emailUser && config.emailPass)
+}
+
 function getTransporter(): nodemailer.Transporter | null {
   if (transporterCache) return transporterCache
 
-  if (!config.emailHost || !config.emailPort || !config.emailUser || !config.emailPass) {
+  if (!isEmailServiceConfigured()) {
     return null
   }
 

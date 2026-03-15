@@ -7,6 +7,7 @@ interface AuthContextType {
   userEmail: string | null
   isAdmin: boolean
   isLoading: boolean
+  authError: string | null
   login: (email: string, password: string, userType?: 'job_seeker' | 'recruiter') => Promise<boolean>
   loginWithGoogle: (profile: {
     googleId: string
@@ -27,6 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isAdmin, setIsAdmin] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [authError, setAuthError] = useState<string | null>(null)
 
   // Charger depuis localStorage au démarrage
   useEffect(() => {
@@ -45,6 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string, _type?: 'job_seeker' | 'recruiter'): Promise<boolean> => {
     setIsLoading(true)
+    setAuthError(null)
     
     try {
       // Appel au backend
@@ -71,6 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false
     } catch (error) {
       console.error('Login error:', error)
+      setAuthError(error instanceof Error ? error.message : 'Login failed')
       return false
     } finally {
       setIsLoading(false)
@@ -84,21 +88,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     type: 'job_seeker' | 'recruiter'
   ): Promise<boolean> => {
     setIsLoading(true)
+    setAuthError(null)
 
     try {
       const result = await registerUser({ name, email, password, userType: type })
 
       if (result) {
-        setIsLoggedIn(true)
-        setUserEmail(result.user.email)
-        setUserType(type)
-        setIsAdmin(false)
+        // Email verification flow: after register, user must verify and then log in.
+        if (result.token && result.user) {
+          setIsLoggedIn(true)
+          setUserEmail(result.user.email)
+          setUserType(result.user.userType)
+          setIsAdmin(!!result.user.isAdmin)
 
-        localStorage.setItem('isLoggedIn', 'true')
-        localStorage.setItem('userEmail', result.user.email)
-        localStorage.setItem('userType', type)
-        localStorage.setItem('isAdmin', 'false')
-        storeUser(result.user)
+          localStorage.setItem('isLoggedIn', 'true')
+          localStorage.setItem('userEmail', result.user.email)
+          localStorage.setItem('userType', result.user.userType)
+          localStorage.setItem('isAdmin', result.user.isAdmin ? 'true' : 'false')
+          storeUser(result.user)
+        } else {
+          // Ensure we remain logged out when verification is required.
+          setIsLoggedIn(false)
+          setUserEmail(null)
+          setUserType(null)
+          setIsAdmin(false)
+          localStorage.removeItem('isLoggedIn')
+          localStorage.removeItem('userEmail')
+          localStorage.removeItem('userType')
+          localStorage.removeItem('isAdmin')
+          localStorage.removeItem('authToken')
+          localStorage.removeItem('user')
+        }
 
         return true
       }
@@ -106,6 +126,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false
     } catch (error) {
       console.error('Register error:', error)
+      setAuthError(error instanceof Error ? error.message : 'Registration failed')
       return false
     } finally {
       setIsLoading(false)
@@ -120,6 +141,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     userType?: 'job_seeker' | 'recruiter'
   }): Promise<boolean> => {
     setIsLoading(true)
+    setAuthError(null)
 
     try {
       const result = await googleLoginUser(profile)
@@ -145,6 +167,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false
     } catch (error) {
       console.error('Google login error:', error)
+      setAuthError(error instanceof Error ? error.message : 'Google sign-in failed')
       return false
     } finally {
       setIsLoading(false)
@@ -168,6 +191,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.removeItem('isAdmin')
       localStorage.removeItem('auth_token')
       localStorage.removeItem('user')
+      setAuthError(null)
     } catch (error) {
       console.error('Logout error:', error)
     } finally {
@@ -176,7 +200,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userType, userEmail, isAdmin, isLoading, login, loginWithGoogle, register, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, userType, userEmail, isAdmin, isLoading, authError, login, loginWithGoogle, register, logout }}>
       {children}
     </AuthContext.Provider>
   )

@@ -110,6 +110,12 @@
   font-family: inherit;
 }
 
+.form-help-text {
+  margin-top: 0.35rem;
+  color: var(--form-muted);
+  font-size: 0.82rem;
+}
+
 .form-error {
   background: #ef4444;
   color: white;

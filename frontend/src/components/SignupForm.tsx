@@ -29,11 +29,14 @@ export function SignupForm({ onclose }: SignupFormProps) {
       })
 
       if (result) {
-        // Store user info
-        storeUser(result.user)
-        
-        // Success - redirect or show success
-        alert(`Bienvenue ${result.user.name} !`)
+        if (result.user) {
+          // Legacy/fallback path when backend returns a token+user.
+          storeUser(result.user)
+          alert(`Bienvenue ${result.user.name} !`)
+        } else {
+          // Default email verification path.
+          alert('Compte cree. Verifiez votre email puis connectez-vous.')
+        }
         
         // Close modal or redirect
         if (onclose) {
