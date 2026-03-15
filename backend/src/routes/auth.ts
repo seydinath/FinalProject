@@ -154,18 +154,35 @@ router.post('/google-login', authWriteLimiter, validateBody([
       return res.status(400).json({ error: 'Missing required fields' })
     }
 
+    const normalizedEmail = email.toLowerCase()
+
     let user = await User.findOne({ googleId })
 
     if (!user) {
-      user = new User({
-        googleId,
-        email,
-        name,
-        avatar,
-        userType: userType || 'job_seeker',
-        isVerified: true,
-      })
-      await user.save()
+      user = await User.findOne({ email: normalizedEmail })
+
+      if (user) {
+        user.googleId = googleId
+        user.name = user.name || name
+        user.avatar = avatar || user.avatar
+        user.isVerified = true
+
+        if (!user.userType) {
+          user.userType = userType || 'job_seeker'
+        }
+
+        await user.save()
+      } else {
+        user = new User({
+          googleId,
+          email: normalizedEmail,
+          name,
+          avatar,
+          userType: userType || 'job_seeker',
+          isVerified: true,
+        })
+        await user.save()
+      }
     }
 
     const token = generateToken(user._id.toString())

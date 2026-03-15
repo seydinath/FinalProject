@@ -153,7 +153,18 @@ export function JobsList({ onOpenAuth }: JobsListProps) {
       {/* Application Form Modal */}
       {showApplicationForm && selectedJob && (
         <div className="modal-overlay" onClick={() => setShowApplicationForm(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content application-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="modal-close-floating"
+              onClick={() => {
+                setShowApplicationForm(false)
+                setSelectedJob(null)
+              }}
+              aria-label={language === 'fr' ? 'Fermer' : 'Close'}
+            >
+              x
+            </button>
             <ApplicationForm
               jobOfferId={selectedJob._id}
               jobTitle={selectedJob.title}

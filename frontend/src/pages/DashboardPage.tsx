@@ -3,6 +3,7 @@ import { useLanguage } from '../utils/LanguageContext'
 import { useTheme } from '../utils/ThemeContext'
 import { useAuth } from '../utils/AuthContext'
 import { PremiumBackground } from '../components/PremiumBackground'
+import { ApplicationForm } from '../components/ApplicationForm'
 import {
   getCandidateOpportunityDashboard,
   getRecruiterPipelineDashboard,
@@ -33,6 +34,9 @@ export function DashboardPage({
   const [loading, setLoading] = useState(true)
   const [recruiterDashboard, setRecruiterDashboard] = useState<RecruiterPipelineDashboard | null>(null)
   const [candidateDashboard, setCandidateDashboard] = useState<CandidateOpportunityDashboard | null>(null)
+  const [showOpportunityPreview, setShowOpportunityPreview] = useState(false)
+  const [showApplicationForm, setShowApplicationForm] = useState(false)
+  const [selectedRecommendedJob, setSelectedRecommendedJob] = useState<CandidateOpportunityDashboard['recommendedJobs'][number] | null>(null)
 
   useEffect(() => {
     const loadDashboard = async () => {
@@ -54,9 +58,114 @@ export function DashboardPage({
     onLogout()
   }
 
+  const openRecommendedJobPreview = (job: CandidateOpportunityDashboard['recommendedJobs'][number]) => {
+    setSelectedRecommendedJob(job)
+    setShowOpportunityPreview(true)
+  }
+
+  const openRecommendedJobApplication = (job: CandidateOpportunityDashboard['recommendedJobs'][number]) => {
+    setSelectedRecommendedJob(job)
+    setShowOpportunityPreview(false)
+    setShowApplicationForm(true)
+  }
+
+  const handleApplicationSuccess = async () => {
+    setShowApplicationForm(false)
+    setShowOpportunityPreview(false)
+    setSelectedRecommendedJob(null)
+    if (userType === 'job_seeker') {
+      setCandidateDashboard(await getCandidateOpportunityDashboard())
+    }
+  }
+
   return (
     <div className={`dashboard-page ${isDark ? 'dark' : 'light'}`}>
       <PremiumBackground />
+
+      {showApplicationForm && selectedRecommendedJob && (
+        <div className="modal-overlay" onClick={() => setShowApplicationForm(false)}>
+          <div className="modal-content application-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="modal-close-floating"
+              onClick={() => {
+                setShowApplicationForm(false)
+                setSelectedRecommendedJob(null)
+              }}
+              aria-label={language === 'fr' ? 'Fermer' : 'Close'}
+            >
+              x
+            </button>
+            <ApplicationForm
+              jobOfferId={selectedRecommendedJob._id}
+              jobTitle={selectedRecommendedJob.title}
+              companyName={selectedRecommendedJob.companyName || 'Unknown'}
+              onSuccess={handleApplicationSuccess}
+              onClose={() => {
+                setShowApplicationForm(false)
+                setSelectedRecommendedJob(null)
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {showOpportunityPreview && selectedRecommendedJob && (
+        <div className="modal-overlay" onClick={() => setShowOpportunityPreview(false)}>
+          <div className="modal-content opportunity-preview-modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="modal-close-floating"
+              onClick={() => setShowOpportunityPreview(false)}
+              aria-label={language === 'fr' ? 'Fermer' : 'Close'}
+            >
+              x
+            </button>
+
+            <div className="opportunity-preview-head">
+              <h3>{selectedRecommendedJob.title}</h3>
+              <span className="match-pill">{selectedRecommendedJob.matchScore}%</span>
+            </div>
+            <p className="opportunity-preview-company">
+              {selectedRecommendedJob.companyName}
+              {selectedRecommendedJob.location ? ` • ${selectedRecommendedJob.location}` : ''}
+            </p>
+
+            <p className="opportunity-preview-copy">{selectedRecommendedJob.description || (language === 'fr' ? 'Aucune description disponible.' : 'No description available.')}</p>
+
+            {selectedRecommendedJob.requiredSkills && selectedRecommendedJob.requiredSkills.length > 0 && (
+              <div className="preview-block">
+                <h4>{language === 'fr' ? 'Competences requises' : 'Required skills'}</h4>
+                <div className="reason-list">
+                  {selectedRecommendedJob.requiredSkills.map((skill) => (
+                    <span key={skill} className="reason-pill">{skill}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {selectedRecommendedJob.matchReasons && selectedRecommendedJob.matchReasons.length > 0 && (
+              <div className="preview-block">
+                <h4>{language === 'fr' ? 'Pourquoi ce poste vous correspond' : 'Why this role matches you'}</h4>
+                <div className="reason-list">
+                  {selectedRecommendedJob.matchReasons.map((reason) => (
+                    <span key={reason} className="reason-pill">{reason}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="opportunity-actions">
+              <button className="opportunity-action-link" onClick={() => setShowOpportunityPreview(false)}>
+                {language === 'fr' ? 'Retour' : 'Back'}
+              </button>
+              <button className="opportunity-action-primary" onClick={() => openRecommendedJobApplication(selectedRecommendedJob)}>
+                {language === 'fr' ? 'Postuler maintenant' : 'Apply now'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="dashboard-container">
         {/* Header */}
@@ -168,7 +277,9 @@ export function DashboardPage({
                   <article key={job._id} className="opportunity-card">
                     <div className="pipeline-offer-top">
                       <div>
-                        <h3>{job.title}</h3>
+                        <button className="opportunity-link" onClick={() => openRecommendedJobPreview(job)}>
+                          {job.title}
+                        </button>
                         <p>{job.companyName} {job.location ? `• ${job.location}` : ''}</p>
                       </div>
                       <span className="match-pill">{job.matchScore}%</span>
@@ -178,6 +289,14 @@ export function DashboardPage({
                       {job.matchReasons.map((reason) => (
                         <span key={reason} className="reason-pill">{reason}</span>
                       ))}
+                    </div>
+                    <div className="opportunity-actions">
+                      <button className="opportunity-action-link" onClick={() => openRecommendedJobPreview(job)}>
+                        {language === 'fr' ? 'Voir le poste' : 'View post'}
+                      </button>
+                      <button className="opportunity-action-primary" onClick={() => openRecommendedJobApplication(job)}>
+                        {language === 'fr' ? 'Postuler' : 'Apply'}
+                      </button>
                     </div>
                   </article>
                 ))}

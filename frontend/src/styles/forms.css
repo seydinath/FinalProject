@@ -19,6 +19,13 @@
   border: 1px solid var(--form-border);
 }
 
+.application-form {
+  max-width: 100%;
+  margin: 0;
+  padding: 1.25rem;
+  box-sizing: border-box;
+}
+
 .modern-form .form-group {
   gap: 0.45rem;
 }
@@ -129,6 +136,15 @@
   margin-top: 1rem;
 }
 
+.application-form .form-actions {
+  position: sticky;
+  bottom: -1px;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(251, 254, 252, 0.92) 0%, rgba(255, 255, 255, 0.98) 100%);
+  padding-top: 0.85rem;
+  margin-top: 0.5rem;
+}
+
 .form-actions .btn-primary,
 .form-actions .btn-secondary {
   min-height: 50px;
@@ -183,6 +199,24 @@
 
   .form-grid {
     grid-template-columns: 1fr;
+    gap: 0.95rem;
+  }
+
+  .application-form .form-group label {
+    margin-bottom: 0.35rem;
+    font-size: 0.88rem;
+  }
+
+  .application-form .form-group input,
+  .application-form .form-group textarea,
+  .application-form .form-group select {
+    min-height: 40px;
+    padding: 0.65rem 0.8rem;
+    font-size: 0.92rem;
+  }
+
+  .application-form .form-group textarea {
+    min-height: 88px;
   }
 
   .form-actions {
