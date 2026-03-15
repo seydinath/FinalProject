@@ -1,203 +1,218 @@
-# JobConnect - Plateforme de Mise en Relation Recruteurs & Chercheurs d'Emploi
+# JobConnect
 
-## Présentation du Projet
+Plateforme de mise en relation entre recruteurs et chercheurs d'emploi, pensée pour des besoins concrets et rapides: missions ponctuelles, recrutements ciblés, suivi de candidatures, gestion administrative et support temps réel.
 
-**JobConnect** est une plateforme web innovante qui met en relation les recruteurs avec les chercheurs d'emploi selon une approche différente du modèle LinkedIn classique.
+## Vue d'ensemble
 
-### Concept Principal
+JobConnect permet a un recruteur de publier une offre, de recevoir des candidatures, de suivre les profils et de piloter ses recrutements depuis une interface dédiée. Côté candidat, la plateforme permet de consulter les offres, postuler, suivre l'état des candidatures et échanger avec l'administration si besoin.
 
-Notre solution permet aux utilisateurs de **poster des besoins en personnel ponctuels ou événementiels**. Par exemple :
-- Un recruteur a besoin de **4 personnes** pour aider lors d'un événement
-- Il poste cette annonce sur JobConnect
-- Les chercheurs d'emploi peuvent voir l'offre et **postuler directement**
-- Le recruteur peut évaluer les candidatures et sélectionner les personnes appropriées
+Le projet est organisé en monorepo avec:
+- un frontend React + TypeScript + Vite
+- un backend Node.js + Express + TypeScript
+- MongoDB pour la persistance principale
+- Redis pour le cache et certaines fonctionnalités temps réel/session quand disponible
+- Socket.IO pour les mises a jour en direct
 
-## Fonctionnalités Principales
+## Fonctionnalités actuelles
 
-### Pour les Recruteurs
-- Créer et publier des offres temporaires ou ponctuelles
-- Spécifier le nombre de personnes recherchées
-- Consulter les candidatures reçues
-- Sélectionner et accepter les candidats
-- Gérer son profil professionnel
+### Recruteurs
+- création et gestion d'offres d'emploi
+- consultation des candidatures reçues
+- suivi des statuts candidat
+- interface de gestion des profils et des flux de recrutement
 
-### Pour les Chercheurs d'Emploi
-- Consulter les offres disponibles
-- Postuler à une offre en un clic
-- Gérer ses candidatures (en attente, acceptées, refusées)
-- Construire un profil attractif
-- Recevoir des notifications sur les réponses
+### Chercheurs d'emploi
+- consultation des offres disponibles
+- dépôt de candidature
+- suivi des candidatures et des statuts
+- gestion du profil et du CV
+- réception des notifications produit
 
-### Authentification
-- Authentification sécurisée via Google Gmail
-- Pas de création de mot de passe complexe
-- Accès rapide et sécurisé pour tous les utilisateurs
+### Administration
+- gestion des utilisateurs
+- modération de contenus
+- revue des demandes de publication d'offres
+- suivi des notifications et de l'activité support
 
-## Architecture Technique
+### Support intégré
+- fil de discussion support utilisateur <-> administration
+- résumé admin des conversations ouvertes et non lues
+- statut de conversation `open` / `resolved`
+- marquage lu utilisateur/admin
+- diffusion temps réel des nouveaux messages et des changements de statut
 
-### Structure Générale
-```
-JobConnect/
-├── Frontend (Client)
-│   └── Application Web (React/Vue/Angular)
-├── Backend (Serveur)
-│   └── API RESTful
-├── Base de Données
-└── Documentation
-```
+### Expérience produit
+- interface responsive desktop/mobile
+- thème clair/sombre harmonisé
+- composants UI premium et animations maîtrisées
+- landing page enrichie avec effets visuels Three.js
 
-### Frontend
-- Interface utilisateur responsive (desktop & mobile)
-- Formulaires pour créer/consulter les offres
-- Système de candidature intuitif
-- Dashboard personnalisé pour chaque utilisateur
+## Stack technique
 
-### Backend
-- API RESTful pour la gestion des offres
-- Gestion des utilisateurs et authentification
-- Système de candidatures
-- Notifications
+- Frontend: React 18, TypeScript, Vite, Redux Toolkit, Socket.IO Client, Three.js
+- Backend: Node.js, Express, TypeScript, Mongoose, JWT, Socket.IO
+- Données: MongoDB, Redis
+- Authentification: JWT, Google OAuth côté backend selon configuration
+- Styling: CSS modulaire par page + styles globaux
 
-### Authentification
-- Intégration OAuth 2.0 avec Google
-- Vérification via Gmail
-- Tokens JWT pour les sessions utilisateur
+## Structure du dépôt
 
-## Modèle de Données (Général)
-
-### Utilisateurs
-- Profil (nom, email, téléphone, description)
-- Type (recruteur ou chercheur d'emploi)
-- Date d'inscription
-
-### Offres/Annonces
-- Titre et description
-- Nombre de postes disponibles
-- Localisation
-- Date de début/fin
-- Compétences requises
-- Créateur (recruteur)
-
-### Candidatures
-- Utilisateur candidat
-- Offre visée
-- Date de candidature
-- Statut (en attente, acceptée, refusée)
-
-## Flux Utilisateur
-
-### Recruteur
-1. **Authentification** via Google
-2. **Création de profil** professionnel
-3. **Publication d'une offre** (titre, description, nombre de postes, localisation)
-4. **Réception des candidatures**
-5. **Sélection des candidats**
-6. **Confirmation avec les sélectionnés**
-
-### Chercheur d'Emploi
-1. **Authentification** via Google
-2. **Création de profil** personnel
-3. **Consultation des offres** disponibles
-4. **Candidature** à une ou plusieurs offres
-5. **Suivi des candidatures**
-
-## Objectifs du Projet
-
-- Créer une plateforme simple et efficace de mise en relation
-- Différenciation par rapport à LinkedIn (approche événementielle/ponctuelle)
-- Expérience utilisateur fluide et intuitive
-- Sécurité garantie via authentification Google
-
-## Technologies Sélectionnées
-
-- **Frontend** : React + TypeScript + Vite
-- **Backend** : Node.js/Express
-- **Base de Données** : MongoDB
-- **Authentification** : Google OAuth 2.0
-- **Effects** : Three.js (Liquid Metal)
-- **Styling** : CSS moderne + Dark Mode
-- **Déploiement** : Heroku / Vercel / AWS
-
----
-
-## 📁 Structure du Projet
-
-```
-JobConnect/
-├── frontend/              # Application React premium
+```text
+FinalProject/
+├── frontend/
 │   ├── src/
-│   │   ├── components/   # Composants réutilisables
-│   │   ├── pages/        # Pages principales
-│   │   ├── utils/        # Utilitaires
-│   │   └── styles/       # CSS global
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── store/
+│   │   ├── styles/
+│   │   └── utils/
 │   └── package.json
-│
-├── backend/              # API Node.js/Express
+├── backend/
 │   ├── src/
-│   │   ├── routes/       # Routes API
-│   │   ├── models/       # Modèles MongoDB
-│   │   ├── middleware/   # Middlewares
-│   │   └── config/       # Configuration
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   └── services/
 │   └── package.json
-│
-└── docs/                 # Documentation
-    ├── SETUP.md         # Guide d'installation
-    ├── API.md           # Documentation API
-    └── DATABASE.md      # Schéma base de données
+├── docs/
+├── docker-compose.yml
+└── package.json
 ```
 
----
+## Démarrage rapide
 
-## 🎨 Fonctionnalités Frontend
+### Prérequis
 
-✅ Landing page premium avec design moderne  
-✅ Mode sombre / Mode clair avec transitions fluides  
-✅ Effets Liquid Metal avec Three.js  
-✅ Design responsive (Desktop & Mobile)  
-✅ Prêt pour Google OAuth  
+- Node.js 18+
+- npm 9+
+- MongoDB
+- Redis optionnel mais recommandé
 
-## 🔧 Fonctionnalités Backend
+### Installation
 
-✅ API RESTful complète
-✅ Authentification JWT
-✅ Modèles MongoDB (User, JobOffer, Application)
-✅ CORS configuré
-✅ Gestion d'erreurs robuste
+Depuis la racine du projet:
 
----
-
-## 🚀 Démarrage Rapide
-
-### Installation Backend
 ```bash
-cd backend
 npm install
-cp .env.example .env
-npm run dev
 ```
 
-### Installation Frontend
+Puis installer les dépendances de chaque workspace si nécessaire:
+
 ```bash
 cd frontend
 npm install
-cp .env.example .env
+
+cd ../backend
+npm install
+```
+
+### Lancement en développement
+
+Depuis la racine:
+
+```bash
 npm run dev
 ```
 
-Le frontend sera accessible sur `http://localhost:5173`  
-L'API sera accessible sur `http://localhost:5000`
+Ou séparément:
 
----
+```bash
+cd backend
+npm run dev
 
-## 📚 Documentation
+cd ../frontend
+npm run dev
+```
 
-Voir les fichiers dans `/docs/`:
-- [SETUP.md](docs/SETUP.md) - Guide d'installation complet
-- [API.md](docs/API.md) - Documentation des endpoints
-- [DATABASE.md](docs/DATABASE.md) - Schéma et modèles
+Accès par défaut:
+- frontend: `http://localhost:5173`
+- backend: `http://localhost:5000`
 
----
+## Scripts utiles
 
-**Version** : 1.0 - Conception Complète  
-**Date** : Mars 2026  
-**Statut** : 🟢 Prêt pour le développement
+### Racine
+
+```bash
+npm run dev
+npm run build
+npm run lint
+```
+
+### Backend
+
+```bash
+npm run dev
+npm run build
+npm run lint
+npm run test
+npm run admin:upsert
+```
+
+### Frontend
+
+```bash
+npm run dev
+npm run build
+npm run lint
+npm run preview
+```
+
+## État de validation
+
+Contrôles vérifiés sur l'état actuel du projet:
+- lint frontend: OK
+- lint backend: OK
+- build frontend: OK
+- build backend: OK
+- smoke test backend: OK
+
+## Modules clés
+
+### Backend
+
+- `src/routes/auth.ts`: authentification et sessions
+- `src/routes/jobOffers.ts`: gestion des offres
+- `src/routes/applications.ts`: gestion des candidatures
+- `src/routes/notifications.ts`: notifications produit
+- `src/routes/support.ts`: messagerie support et statut des conversations
+- `src/services/realtime.ts`: diffusion Socket.IO
+
+### Frontend
+
+- `src/pages/NotificationsPage.tsx`: historique notifications + fil support utilisateur
+- `src/pages/UserManagementPage.tsx`: gestion admin + inbox support
+- `src/components/TopNav.tsx`: navigation globale, badges et signal support
+- `src/services/supportService.ts`: API du support
+
+## Flux support
+
+### Utilisateur
+1. ouvre son espace notifications
+2. consulte l'historique ou envoie un message support
+3. reçoit les réponses de l'administration en temps réel
+4. voit le statut de la conversation
+
+### Administration
+1. consulte le résumé des conversations dans la navigation / gestion utilisateurs
+2. filtre les discussions ouvertes, résolues ou non lues
+3. répond au fil support
+4. marque la conversation comme résolue ou la rouvre
+
+## Documentation associée
+
+Voir les autres fichiers du dossier `docs/`:
+- [SETUP.md](SETUP.md): installation détaillée
+- [API.md](API.md): documentation des endpoints
+- [DATABASE.md](DATABASE.md): structure des données
+- [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md): guide d'intégration
+- [JOB_OFFERS_WORKFLOW.md](JOB_OFFERS_WORKFLOW.md): workflow métier des offres
+- [TESTING.md](TESTING.md): stratégie et commandes de test
+
+## Statut
+
+- Version documentaire: mars 2026
+- Statut projet: base fonctionnelle active, buildée et validée
+- Dernière mise a jour README: alignée avec l'état réel du code et des commandes disponibles
