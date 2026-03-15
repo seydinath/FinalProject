@@ -1,0 +1,24 @@
+# Robots.txt for JobConnect
+# Allow all crawlers to index the site
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://jobconnect.senegal/sitemap.xml
+
+# Crawl delay (in seconds)
+Crawl-delay: 1
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing specific
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

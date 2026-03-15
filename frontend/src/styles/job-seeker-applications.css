@@ -1,0 +1,195 @@
+/* Job Seeker Applications */
+.job-seeker-applications {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.dashboard-page.dark .job-seeker-applications h2 {
+  color: #f8fafc;
+}
+
+.dashboard-page.dark .job-seeker-applications .empty-state,
+.dashboard-page.dark .job-seeker-applications .loading {
+  color: #cbd5e1;
+}
+
+.job-seeker-applications h2 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #1f2937;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  background: white;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.application-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.application-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.application-card.status-accepted {
+  border: 2px solid #10b981;
+}
+
+.application-card.status-reviewing {
+  border: 2px solid #38bdf8;
+}
+
+.application-card.status-shortlisted {
+  border: 2px solid #8b5cf6;
+}
+
+.application-card.status-interview_scheduled {
+  border: 2px solid #f97316;
+}
+
+.application-card.status-rejected {
+  border: 2px solid #ef4444;
+  opacity: 0.8;
+}
+
+.status-message {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.status-applied .status-message {
+  background: #fef3c7;
+  color: #78350f;
+}
+
+.status-accepted .status-message {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-reviewing .status-message {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.status-shortlisted .status-message {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+
+.status-interview_scheduled .status-message {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.status-rejected .status-message {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.job-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.detail-item-column {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.detail-item .label {
+  font-weight: 600;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.detail-item .value {
+  color: #1f2937;
+  font-size: 0.95rem;
+}
+
+.timestamps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.timestamps small {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.match-reason-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.match-reason-pill {
+  border-radius: 999px;
+  padding: 0.35rem 0.65rem;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .filter-buttons {
+    flex-direction: column;
+  }
+
+  .filter-btn {
+    width: 100%;
+  }
+
+  .job-details {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,487 @@
+/* MICRO-INTERACTIONS - Ripple Effects, Scroll Animations, Button Feedback */
+
+/* ===== RIPPLE EFFECT ===== */
+@keyframes ripple {
+  0% {
+    transform: scale(0) translate(-50%, -50%);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(4) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+/* Base ripple element positioning */
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(0);
+  animation: ripple 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+/* Dark mode ripple */
+.landing-page.dark .ripple,
+.auth-page.dark .ripple,
+.dashboard-page.dark .ripple,
+.talent-search-page.dark .ripple,
+.job-seeker-profile-page.dark .ripple {
+  background: rgba(150, 150, 200, 0.5);
+}
+
+/* Light mode ripple */
+.landing-page.light .ripple,
+.auth-page.light .ripple,
+.dashboard-page.light .ripple,
+.talent-search-page.light .ripple,
+.job-seeker-profile-page.light .ripple {
+  background: rgba(100, 100, 150, 0.4);
+}
+
+/* ===== SCROLL REVEAL ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scroll reveal classes - used by useScrollReveal hook */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scroll-reveal.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scroll-reveal-left.reveal {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scroll-reveal-right.reveal {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scroll-reveal-scale.reveal {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger delays for multiple elements */
+.scroll-reveal:nth-child(1) { transition-delay: 0.1s; }
+.scroll-reveal:nth-child(2) { transition-delay: 0.2s; }
+.scroll-reveal:nth-child(3) { transition-delay: 0.3s; }
+.scroll-reveal:nth-child(4) { transition-delay: 0.4s; }
+.scroll-reveal:nth-child(5) { transition-delay: 0.5s; }
+.scroll-reveal:nth-child(6) { transition-delay: 0.6s; }
+
+.scroll-reveal-left:nth-child(1) { transition-delay: 0.1s; }
+.scroll-reveal-left:nth-child(2) { transition-delay: 0.2s; }
+.scroll-reveal-left:nth-child(3) { transition-delay: 0.3s; }
+
+.scroll-reveal-right:nth-child(1) { transition-delay: 0.1s; }
+.scroll-reveal-right:nth-child(2) { transition-delay: 0.2s; }
+.scroll-reveal-right:nth-child(3) { transition-delay: 0.3s; }
+
+/* ===== BUTTON FEEDBACK ===== */
+/* Primary Button */
+.btn-primary,
+.hero-cta button,
+.card-cta {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-primary:hover,
+.hero-cta button:hover,
+.card-cta:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(255, 107, 53, 0.3);
+}
+
+.btn-primary:active,
+.hero-cta button:active,
+.card-cta:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Secondary Button */
+.btn-secondary,
+.btn-signin,
+.btn-back {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-secondary:hover,
+.btn-signin:hover,
+.btn-back:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.25);
+}
+
+.btn-secondary:active,
+.btn-signin:active,
+.btn-back:active {
+  transform: translateY(0) scale(0.96);
+}
+
+/* Tertiary Button */
+.btn-tertiary,
+.btn-outline {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-tertiary:hover,
+.btn-outline:hover {
+  transform: translateY(-2px);
+  color: var(--primary-light);
+  border-color: var(--primary-light);
+  background: rgba(78, 205, 196, 0.08);
+}
+
+.btn-tertiary:active,
+.btn-outline:active {
+  transform: scale(0.98);
+}
+
+/* Loading Button */
+.loading-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-button:disabled {
+  transform: scale(0.98) !important;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loading-button .spinner {
+  display: inline-block;
+  margin-right: 0.5rem;
+  animation: spin 1s linear infinite;
+}
+
+/* ===== INPUT FOCUS ANIMATIONS ===== */
+/* Input field focus animation */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  transform: translateY(-2px);
+}
+
+/* Focus indicator line animation */
+input::before,
+textarea::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-light), var(--primary-dark));
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+input:focus::before,
+textarea:focus::before {
+  width: 100%;
+}
+
+/* Dark mode input focus */
+.landing-page.dark input:focus,
+.landing-page.dark textarea:focus,
+.landing-page.dark select:focus,
+.auth-page.dark input:focus,
+.auth-page.dark textarea:focus,
+.auth-page.dark select:focus {
+  background-color: rgba(60, 60, 90, 0.8);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+/* Light mode input focus */
+.landing-page.light input:focus,
+.landing-page.light textarea:focus,
+.landing-page.light select:focus,
+.auth-page.light input:focus,
+.auth-page.light textarea:focus,
+.auth-page.light select:focus {
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Form group animation */
+.form-group {
+  transition: all 0.3s ease;
+}
+
+.form-group:focus-within label {
+  color: var(--primary-light);
+  transform: scale(1.05);
+}
+
+/* ===== CARD HOVER ANIMATIONS ===== */
+.job-card,
+.feature-card,
+.dashboard-card,
+.profile-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.job-card:hover,
+.feature-card:hover,
+.dashboard-card:hover,
+.profile-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+/* Shine effect on card hover */
+.job-card::after,
+.feature-card::after,
+.dashboard-card::after,
+.profile-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.job-card:hover::after,
+.feature-card:hover::after,
+.dashboard-card:hover::after,
+.profile-card:hover::after {
+  left: 100%;
+}
+
+/* ===== LINK ANIMATIONS ===== */
+a {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-light), var(--primary-dark));
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+a:active {
+  transform: scale(0.98);
+}
+
+/* ===== BADGE ANIMATIONS ===== */
+.badge,
+.tag,
+.label {
+  position: relative;
+  display: inline-block;
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.badge.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ===== MODAL ANIMATIONS ===== */
+.modal-overlay {
+  animation: fadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-content {
+  animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVE MICRO-INTERACTIONS ===== */
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-secondary,
+  .hero-cta button,
+  .card-cta {
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .hero-cta button:hover,
+  .card-cta:hover {
+    transform: scale(1.01);
+  }
+
+  .job-card:hover,
+  .feature-card:hover,
+  .dashboard-card:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Reduce animation on mobile when prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .btn-primary,
+    .btn-secondary,
+    .hero-cta button,
+    input,
+    textarea,
+    select,
+    .job-card,
+    .feature-card {
+      transition: none !important;
+      animation: none !important;
+    }
+
+    .btn-primary:hover,
+    .btn-secondary:hover,
+    .job-card:hover {
+      transform: none;
+    }
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

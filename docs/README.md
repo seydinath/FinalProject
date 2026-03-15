@@ -108,15 +108,96 @@ JobConnect/
 - Expérience utilisateur fluide et intuitive
 - Sécurité garantie via authentification Google
 
-## Technologies Envisagées
+## Technologies Sélectionnées
 
-- **Frontend** : React / Vue.js / Angular
-- **Backend** : Node.js/Express ou Python/Django
-- **Base de Données** : MongoDB / PostgreSQL
+- **Frontend** : React + TypeScript + Vite
+- **Backend** : Node.js/Express
+- **Base de Données** : MongoDB
 - **Authentification** : Google OAuth 2.0
+- **Effects** : Three.js (Liquid Metal)
+- **Styling** : CSS moderne + Dark Mode
 - **Déploiement** : Heroku / Vercel / AWS
 
 ---
 
-**Version** : 1.0 - Documentation Initiale  
-**Date** : Mars 2026
+## 📁 Structure du Projet
+
+```
+JobConnect/
+├── frontend/              # Application React premium
+│   ├── src/
+│   │   ├── components/   # Composants réutilisables
+│   │   ├── pages/        # Pages principales
+│   │   ├── utils/        # Utilitaires
+│   │   └── styles/       # CSS global
+│   └── package.json
+│
+├── backend/              # API Node.js/Express
+│   ├── src/
+│   │   ├── routes/       # Routes API
+│   │   ├── models/       # Modèles MongoDB
+│   │   ├── middleware/   # Middlewares
+│   │   └── config/       # Configuration
+│   └── package.json
+│
+└── docs/                 # Documentation
+    ├── SETUP.md         # Guide d'installation
+    ├── API.md           # Documentation API
+    └── DATABASE.md      # Schéma base de données
+```
+
+---
+
+## 🎨 Fonctionnalités Frontend
+
+✅ Landing page premium avec design moderne  
+✅ Mode sombre / Mode clair avec transitions fluides  
+✅ Effets Liquid Metal avec Three.js  
+✅ Design responsive (Desktop & Mobile)  
+✅ Prêt pour Google OAuth  
+
+## 🔧 Fonctionnalités Backend
+
+✅ API RESTful complète
+✅ Authentification JWT
+✅ Modèles MongoDB (User, JobOffer, Application)
+✅ CORS configuré
+✅ Gestion d'erreurs robuste
+
+---
+
+## 🚀 Démarrage Rapide
+
+### Installation Backend
+```bash
+cd backend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+### Installation Frontend
+```bash
+cd frontend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Le frontend sera accessible sur `http://localhost:5173`  
+L'API sera accessible sur `http://localhost:5000`
+
+---
+
+## 📚 Documentation
+
+Voir les fichiers dans `/docs/`:
+- [SETUP.md](docs/SETUP.md) - Guide d'installation complet
+- [API.md](docs/API.md) - Documentation des endpoints
+- [DATABASE.md](docs/DATABASE.md) - Schéma et modèles
+
+---
+
+**Version** : 1.0 - Conception Complète  
+**Date** : Mars 2026  
+**Statut** : 🟢 Prêt pour le développement

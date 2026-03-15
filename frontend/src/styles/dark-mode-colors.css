@@ -1,0 +1,361 @@
+/* ========================================
+   DARK MODE COLOR SYSTEM
+   ======================================== */
+
+:root {
+  /* LIGHT MODE COLORS */
+  --color-primary: #4ecdc4;
+  --color-secondary: #ff6b35;
+  --color-accent: #44a08d;
+
+  /* LIGHT MODE BACKGROUNDS */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #f0f0f0;
+
+  /* LIGHT MODE TEXT */
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+
+  /* LIGHT MODE BORDERS */
+  --border-light: #e0e0e0;
+  --border-medium: #d0d0d0;
+  --border-dark: #c0c0c0;
+
+  /* LIGHT MODE STATES */
+  --success-light: #d4edda;
+  --success-dark: #10b981;
+  --error-light: #f8d7da;
+  --error-dark: #ef4444;
+  --warning-light: #fff3cd;
+  --warning-dark: #f59e0b;
+  --info-light: #d1ecf1;
+  --info-dark: #3b82f6;
+
+  /* SHADOWS */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* DARK MODE COLORS */
+    --color-primary: #4ecdc4;
+    --color-secondary: #ff6b35;
+    --color-accent: #44a08d;
+
+    /* DARK MODE BACKGROUNDS */
+    --bg-primary: #0f0f1e;
+    --bg-secondary: #1a1a2e;
+    --bg-tertiary: #2a2a3e;
+
+    /* DARK MODE TEXT */
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-muted: #808080;
+
+    /* DARK MODE BORDERS */
+    --border-light: rgba(78, 205, 196, 0.2);
+    --border-medium: rgba(78, 205, 196, 0.15);
+    --border-dark: rgba(78, 205, 196, 0.1);
+
+    /* DARK MODE STATES */
+    --success-light: rgba(16, 185, 129, 0.2);
+    --success-dark: #10b981;
+    --error-light: rgba(239, 68, 68, 0.2);
+    --error-dark: #ef4444;
+    --warning-light: rgba(245, 158, 11, 0.2);
+    --warning-dark: #f59e0b;
+    --info-light: rgba(59, 130, 246, 0.2);
+    --info-dark: #3b82f6;
+
+    /* SHADOWS */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* DARK CLASS FALLBACK */
+.dark {
+  /* DARK MODE COLORS */
+  --color-primary: #4ecdc4;
+  --color-secondary: #ff6b35;
+  --color-accent: #44a08d;
+
+  /* DARK MODE BACKGROUNDS */
+  --bg-primary: #0f0f1e;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #2a2a3e;
+
+  /* DARK MODE TEXT */
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #808080;
+
+  /* DARK MODE BORDERS */
+  --border-light: rgba(78, 205, 196, 0.2);
+  --border-medium: rgba(78, 205, 196, 0.15);
+  --border-dark: rgba(78, 205, 196, 0.1);
+
+  /* DARK MODE STATES */
+  --success-light: rgba(16, 185, 129, 0.2);
+  --success-dark: #10b981;
+  --error-light: rgba(239, 68, 68, 0.2);
+  --error-dark: #ef4444;
+  --warning-light: rgba(245, 158, 11, 0.2);
+  --warning-dark: #f59e0b;
+  --info-light: rgba(59, 130, 246, 0.2);
+  --info-dark: #3b82f6;
+
+  /* SHADOWS */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+
+  color-scheme: dark;
+}
+
+.light {
+  /* LIGHT MODE COLORS */
+  --color-primary: #4ecdc4;
+  --color-secondary: #ff6b35;
+  --color-accent: #44a08d;
+
+  /* LIGHT MODE BACKGROUNDS */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #f0f0f0;
+
+  /* LIGHT MODE TEXT */
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+
+  /* LIGHT MODE BORDERS */
+  --border-light: #e0e0e0;
+  --border-medium: #d0d0d0;
+  --border-dark: #c0c0c0;
+
+  /* LIGHT MODE STATES */
+  --success-light: #d4edda;
+  --success-dark: #10b981;
+  --error-light: #f8d7da;
+  --error-dark: #ef4444;
+  --warning-light: #fff3cd;
+  --warning-dark: #f59e0b;
+  --info-light: #d1ecf1;
+  --info-dark: #3b82f6;
+
+  /* SHADOWS */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+  color-scheme: light;
+}
+
+/* SEMANTIC USAGE */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* CARDS & CONTAINERS */
+.card,
+[class*="card"],
+.container,
+[class*="container"] {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+/* INPUTS & FORMS */
+input,
+textarea,
+select,
+.form-input,
+.form-textarea,
+.form-select {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-light);
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+}
+
+/* BUTTONS */
+.btn-primary,
+button[type="submit"] {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-secondary,
+button[type="button"] {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-light);
+}
+
+/* LINKS */
+a {
+  color: var(--color-primary);
+}
+
+a:visited {
+  color: var(--color-accent);
+}
+
+/* ALERTS & STATES */
+.alert-success,
+[class*="success"] {
+  background-color: var(--success-light);
+  color: var(--success-dark);
+  border-color: var(--success-dark);
+}
+
+.alert-error,
+[class*="error"] {
+  background-color: var(--error-light);
+  color: var(--error-dark);
+  border-color: var(--error-dark);
+}
+
+.alert-warning,
+[class*="warning"] {
+  background-color: var(--warning-light);
+  color: var(--warning-dark);
+  border-color: var(--warning-dark);
+}
+
+.alert-info,
+[class*="info"] {
+  background-color: var(--info-light);
+  color: var(--info-dark);
+  border-color: var(--info-dark);
+}
+
+/* NAVIGATION */
+nav,
+[role="navigation"] {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+nav a,
+[role="navigation"] a {
+  color: var(--text-primary);
+}
+
+nav a:hover,
+nav a.active,
+[role="navigation"] a:hover,
+[role="navigation"] a.active {
+  color: var(--color-primary);
+}
+
+/* CODE & PREFORMATTED */
+code,
+pre,
+.code-block {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-light);
+}
+
+/* DIVIDERS */
+hr,
+.divider {
+  border-color: var(--border-light);
+}
+
+/* SCROLLBAR STYLING */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+.dark::-webkit-scrollbar-thumb {
+  background: rgba(78, 205, 196, 0.6);
+}
+
+.dark::-webkit-scrollbar-thumb:hover {
+  background: rgba(78, 205, 196, 0.8);
+}
+
+/* UTILITIES */
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.bg-tertiary { background-color: var(--bg-tertiary); }
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+
+.border { border-color: var(--border-light); }
+.border-medium { border-color: var(--border-medium); }
+.border-dark { border-color: var(--border-dark); }
+
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+
+/* SELECTION */
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* FOCUS VISIBLE */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

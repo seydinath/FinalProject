@@ -1,0 +1,26 @@
+{
+  "name": "jobconnect",
+  "version": "1.0.0",
+  "description": "JobConnect - Plateforme de mise en relation recruteurs et chercheurs d'emploi",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=frontend\" \"npm run dev --workspace=backend\"",
+    "build": "npm run build --workspace=frontend && npm run build --workspace=backend",
+    "start": "npm start --workspace=backend",
+    "lint": "npm run lint --workspace=frontend && npm run lint --workspace=backend"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.0",
+    "concurrently": "^8.2.2",
+    "eslint-plugin-react-hooks": "^7.0.1"
+  },
+  "dependencies": {
+    "mongodb": "^7.1.0",
+    "redis": "^5.11.0"
+  }
+}

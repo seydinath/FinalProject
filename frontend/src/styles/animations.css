@@ -1,0 +1,310 @@
+/* ========================================
+   ANIMATIONS & INTERACTIONS ADVANCED
+   ======================================== */
+
+/* SCROLL ANIMATIONS */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(78, 205, 196, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(78, 205, 196, 0.6);
+  }
+}
+
+/* INTERSECTION OBSERVER BASED */
+.fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.fade-in-down {
+  animation: fadeInDown 0.6s ease forwards;
+  opacity: 0;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.6s ease forwards;
+  opacity: 0;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.6s ease forwards;
+  opacity: 0;
+}
+
+.scale-in {
+  animation: scaleIn 0.5s ease forwards;
+  opacity: 0;
+}
+
+/* STAGGERED ANIMATIONS */
+.animate-stagger > * {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-stagger > :nth-child(1) { animation-delay: 0.1s; }
+.animate-stagger > :nth-child(2) { animation-delay: 0.2s; }
+.animate-stagger > :nth-child(3) { animation-delay: 0.3s; }
+.animate-stagger > :nth-child(4) { animation-delay: 0.4s; }
+.animate-stagger > :nth-child(5) { animation-delay: 0.5s; }
+
+/* BUTTON INTERACTIONS */
+button, a.btn, input[type="submit"], input[type="button"] {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+button:hover, a.btn:hover, input[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+button:active, a.btn:active, input[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* RIPPLE EFFECT ON BUTTONS */
+button::before, a.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+button:active::before, a.btn:active::before {
+  animation: ripple 0.6s ease forwards;
+}
+
+@keyframes ripple {
+  to {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+/* EXPANDED HOVER STATE FOR CARDS */
+.card, [class*="card"] {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover, [class*="card"]:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+}
+
+.job-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(78, 205, 196, 0.15);
+}
+
+/* SMOOTH TRANSITIONS */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* INPUT FOCUS EFFECTS */
+input, textarea, select {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:focus, textarea:focus, select:focus {
+  transform: scale(1.01);
+  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+  outline: none;
+}
+
+/* FORM GROUP ANIMATIONS */
+.form-group {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.form-group:nth-child(1) { animation-delay: 0s; }
+.form-group:nth-child(2) { animation-delay: 0.1s; }
+.form-group:nth-child(3) { animation-delay: 0.2s; }
+.form-group:nth-child(4) { animation-delay: 0.3s; }
+.form-group:nth-child(5) { animation-delay: 0.4s; }
+
+/* PAGE TRANSITIONS */
+.page-enter {
+  animation: fadeInUp 0.5s ease;
+}
+
+.page-exit {
+  animation: fadeInDown 0.5s ease reverse;
+}
+
+/* SMOOTH SCROLL BEHAVIOR */
+html {
+  scroll-behavior: smooth;
+}
+
+/* FLOATING ELEMENTS */
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* BOUNCE EFFECT */
+.bounce {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+/* PULSE / LOADING INDICATORS */
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* GLOW EFFECT */
+.glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* SECTION REVEAL ON SCROLL */
+.section {
+  opacity: 1;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section.hidden {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* SMOOTH NUM TRANSITIONS */
+.number-change {
+  transition: opacity 0.3s ease;
+}
+
+/* MOBILE SPECIFIC */
+@media (max-width: 768px) {
+  button, a.btn {
+    transform: scale(1);
+  }
+
+  button:active, a.btn:active {
+    transform: scale(0.98);
+  }
+
+  .card:hover, [class*="card"]:hover {
+    transform: translateY(-4px);
+  }
+
+  input:focus, textarea:focus, select:focus {
+    transform: scale(1);
+  }
+}
+
+/* DARK MODE ANIMATIONS */
+.dark {
+  color-scheme: dark;
+}
+
+.dark button:hover {
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+}
+
+.dark .card:hover {
+  box-shadow: 0 20px 40px rgba(78, 205, 196, 0.1);
+}

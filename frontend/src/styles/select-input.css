@@ -1,0 +1,238 @@
+/* ELEGANT SELECT INPUT - Glass Morphism Design */
+
+.select-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.select-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.select-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Icon before select */
+.select-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  pointer-events: none;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.select-container:hover .select-icon {
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Arrow after select */
+.select-arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: inherit;
+  opacity: 0.7;
+}
+
+.select-container:hover .select-arrow {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.15);
+}
+
+/* Main select element */
+.select-input {
+  width: 100%;
+  padding: 0.95rem 3.2rem 0.95rem 3.5rem;
+  background: transparent;
+  border: 2px solid;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  appearance: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+}
+
+/* Dark mode */
+.landing-page.dark .select-input,
+.auth-page.dark .select-input,
+.dashboard-page.dark .select-input,
+.talent-search-page.dark .select-input,
+.job-seeker-profile-page.dark .select-input {
+  background-color: rgba(40, 40, 60, 0.7);
+  border-color: rgba(150, 150, 180, 0.3);
+  color: #e0e0ff;
+}
+
+.landing-page.dark .select-input:hover,
+.auth-page.dark .select-input:hover,
+.dashboard-page.dark .select-input:hover,
+.talent-search-page.dark .select-input:hover,
+.job-seeker-profile-page.dark .select-input:hover {
+  background-color: rgba(50, 50, 80, 0.8);
+  border-color: rgba(150, 150, 200, 0.5);
+  box-shadow: 0 8px 32px rgba(100, 150, 255, 0.15);
+}
+
+.landing-page.dark .select-input:focus,
+.auth-page.dark .select-input:focus,
+.dashboard-page.dark .select-input:focus,
+.talent-search-page.dark .select-input:focus,
+.job-seeker-profile-page.dark .select-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: rgba(50, 50, 90, 0.9);
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2),
+              inset 0 0 0 1px rgba(102, 126, 234, 0.3);
+  transform: translateY(-2px);
+}
+
+.landing-page.dark .select-label {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.landing-page.dark .select-arrow {
+  color: rgba(150, 150, 200, 0.7);
+}
+
+/* Light mode */
+.landing-page.light .select-input,
+.auth-page.light .select-input,
+.dashboard-page.light .select-input,
+.talent-search-page.light .select-input,
+.job-seeker-profile-page.light .select-input {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(100, 100, 150, 0.25);
+  color: var(--text-light);
+}
+
+.landing-page.light .select-input:hover,
+.auth-page.light .select-input:hover,
+.dashboard-page.light .select-input:hover,
+.talent-search-page.light .select-input:hover,
+.job-seeker-profile-page.light .select-input:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(100, 100, 150, 0.4);
+  box-shadow: 0 8px 32px rgba(100, 100, 200, 0.1);
+}
+
+.landing-page.light .select-input:focus,
+.auth-page.light .select-input:focus,
+.dashboard-page.light .select-input:focus,
+.talent-search-page.light .select-input:focus,
+.job-seeker-profile-page.light .select-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15),
+              inset 0 0 0 1px rgba(102, 126, 234, 0.2);
+  transform: translateY(-2px);
+}
+
+.landing-page.light .select-label {
+  color: var(--text-light);
+}
+
+.landing-page.light .select-arrow {
+  color: rgba(100, 100, 150, 0.6);
+}
+
+/* Select options styling */
+.select-input option {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  padding: 0.8rem;
+  border: none;
+}
+
+.select-input option:checked {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #ffffff;
+}
+
+.select-input option:hover {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* Error state */
+.select-input.error {
+  border-color: #ff6b6b;
+  background-color: rgba(255, 107, 107, 0.05);
+}
+
+.select-input.error:focus {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.2);
+}
+
+.select-error {
+  font-size: 0.85rem;
+  color: #ff6b6b;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .select-input {
+    padding: 0.85rem 2.8rem 0.85rem 3rem;
+    font-size: 0.95rem;
+  }
+
+  .select-icon {
+    left: 0.8rem;
+    font-size: 1.2rem;
+  }
+
+  .select-arrow {
+    right: 0.8rem;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Animation for option list appearance */
+.select-input::-webkit-scrollbar {
+  width: 8px;
+}
+
+.select-input::-webkit-scrollbar-track {
+  background: rgba(100, 100, 150, 0.1);
+  border-radius: 4px;
+}
+
+.select-input::-webkit-scrollbar-thumb {
+  background: rgba(100, 150, 255, 0.4);
+  border-radius: 4px;
+}
+
+.select-input::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 150, 255, 0.6);
+}

@@ -1,0 +1,467 @@
+.user-management-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  background-attachment: fixed;
+  padding: 96px 1rem 2.5rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated background elements */
+.user-management-page::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.user-management-page::after {
+  content: '';
+  position: fixed;
+  bottom: -20%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.user-management-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.user-management-header {
+  margin-bottom: 2.5rem;
+  animation: slideDown 0.6s ease-out;
+}
+
+.user-management-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.user-management-subtitle {
+  font-size: 1rem;
+  color: #cbd5e1;
+  opacity: 0.85;
+}
+
+/* Filters */
+.user-management-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.6s ease-out 0.2s both;
+}
+
+.filter-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.filter-input,
+.filter-select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 2px solid rgba(226, 232, 240, 0.1);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background: rgba(226, 232, 240, 0.08);
+  backdrop-filter: blur(10px);
+  color: #e2e8f0;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.filter-input::placeholder {
+  color: #64748b;
+}
+
+.filter-input,
+.filter-select {
+  border: 2px solid rgba(226, 232, 240, 0.1);
+  transition: all 0.3s ease;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: #7c3aed;
+  background: rgba(124, 58, 237, 0.1);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.15);
+}
+
+.filter-select {
+  cursor: pointer;
+}
+
+.filter-select option {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+/* Table */
+.users-table-wrapper {
+  background: rgba(226, 232, 240, 0.08);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(226, 232, 240, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.users-table thead {
+  background: rgba(148, 163, 184, 0.12);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+}
+
+.users-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  backdrop-filter: blur(8px);
+}
+
+.users-table th {
+  padding: 1.2rem 1rem;
+  text-align: left;
+  font-weight: 700;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+.users-table td {
+  padding: 1.2rem 1rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.05);
+  color: #cbd5e1;
+}
+
+.user-row {
+  transition: all 0.3s ease;
+}
+
+.user-row:hover {
+  background: rgba(226, 232, 240, 0.08);
+  transform: translateX(2px);
+}
+
+.user-name {
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.user-email {
+  color: #93c5fd;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.85rem;
+}
+
+.user-type {
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+.role-select {
+  width: 100%;
+  min-width: 140px;
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid rgba(226, 232, 240, 0.14);
+  background: rgba(15, 23, 42, 0.8);
+  color: #e2e8f0;
+}
+
+.user-admin-rights {
+  min-width: 140px;
+}
+
+.admin-rights-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.admin-rights-btn.enabled {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+}
+
+.admin-rights-btn.disabled {
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+}
+
+.user-date {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+/* Status Badges */
+.user-status {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+}
+
+.status-active {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status-suspended {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.status-banned {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Actions */
+.user-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.3rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.6rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:hover {
+  transform: scale(1.15);
+  background: rgba(226, 232, 240, 0.15);
+}
+
+.action-suspend {
+  color: #fbbf24;
+}
+
+.action-ban {
+  color: #fca5a5;
+}
+
+.action-activate {
+  color: #6ee7b7;
+}
+
+.action-delete {
+  color: #ef4444;
+}
+
+/* No Users Message */
+.no-users-message {
+  background: rgba(226, 232, 240, 0.08);
+  backdrop-filter: blur(20px);
+  border: 2px dashed rgba(226, 232, 240, 0.2);
+  border-radius: 16px;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.no-users-message:hover {
+  border-color: rgba(226, 232, 240, 0.3);
+  background: rgba(226, 232, 240, 0.12);
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .users-table {
+    font-size: 0.85rem;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 0.9rem 0.75rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .user-management-filters {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .users-table {
+    font-size: 0.8rem;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 0.8rem 0.6rem;
+  }
+
+  .action-btn {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-management-page {
+    padding: 84px 0.75rem 1.5rem;
+  }
+
+  .user-management-title {
+    font-size: 1.8rem;
+  }
+
+  .user-management-filters {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .users-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .users-table {
+    min-width: 760px;
+    font-size: 0.8rem;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 0.75rem 0.6rem;
+  }
+
+  .action-buttons {
+    gap: 0.3rem;
+  }
+
+  .action-btn {
+    padding: 0.4rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-management-page {
+    padding: 1rem 0.5rem;
+  }
+
+  .user-management-title {
+    font-size: 1.4rem;
+  }
+
+  .user-management-filters {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .users-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .action-btn {
+    padding: 0.3rem;
+    font-size: 0.8rem;
+  }
+
+  .user-name {
+    font-size: 0.9rem;
+  }
+
+  .user-email {
+    font-size: 0.75rem;
+  }
+}
