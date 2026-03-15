@@ -35,7 +35,7 @@
 .panel-subtitle {
   margin: 0;
   font-size: 0.9rem;
-  color: #64748b;
+  color: #9fb0c8;
 }
 
 .refresh-btn {
@@ -43,9 +43,9 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  background: rgba(139, 92, 246, 0.08);
-  color: #c4b5fd;
+  border: 1px solid rgba(20, 184, 166, 0.35);
+  background: rgba(20, 184, 166, 0.1);
+  color: #7dd3fc;
   font-size: 1.3rem;
   line-height: 1;
   cursor: pointer;
@@ -57,10 +57,10 @@
 }
 
 .refresh-btn:hover {
-  background: rgba(139, 92, 246, 0.2);
-  border-color: rgba(167, 139, 250, 0.6);
+  background: rgba(20, 184, 166, 0.2);
+  border-color: rgba(45, 212, 191, 0.65);
   transform: rotate(90deg);
-  color: #ede9fe;
+  color: #e0f2fe;
 }
 
 /* ---------- Stats bar ---------- */
@@ -143,14 +143,14 @@
   justify-content: center;
   padding: 5rem 2rem;
   font-size: 1rem;
-  color: #94a3b8;
+  color: #b8c7dc;
 }
 
 .loading-spinner {
   width: 22px;
   height: 22px;
-  border: 3px solid rgba(139, 92, 246, 0.25);
-  border-top-color: #8b5cf6;
+  border: 3px solid rgba(20, 184, 166, 0.25);
+  border-top-color: #14b8a6;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   flex-shrink: 0;
@@ -175,7 +175,7 @@
 .empty-state {
   text-align: center;
   padding: 5rem 2rem;
-  color: #64748b;
+  color: #9fb0c8;
 }
 
 .empty-icon {
@@ -206,9 +206,9 @@
   gap: 0.5rem;
   padding: 0.55rem 1.2rem;
   border-radius: 999px;
-  border: 1.5px solid rgba(139, 92, 246, 0.25);
-  background: rgba(139, 92, 246, 0.05);
-  color: #a78bfa;
+  border: 1.5px solid rgba(20, 184, 166, 0.28);
+  background: rgba(20, 184, 166, 0.08);
+  color: #5eead4;
   font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
@@ -217,17 +217,17 @@
 }
 
 .filter-btn:hover {
-  background: rgba(139, 92, 246, 0.14);
-  border-color: rgba(167, 139, 250, 0.5);
+  background: rgba(20, 184, 166, 0.16);
+  border-color: rgba(45, 212, 191, 0.52);
   color: #ede9fe;
   transform: translateY(-1px);
 }
 
 .filter-btn.active {
-  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  background: linear-gradient(135deg, #0ea5a4 0%, #2563eb 100%);
   border-color: transparent;
   color: #fff;
-  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.4);
+  box-shadow: 0 4px 18px rgba(20, 184, 166, 0.35);
 }
 
 .filter-count {
@@ -272,7 +272,7 @@
   content: '';
   display: block;
   height: 3px;
-  background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 60%, transparent 100%);
+  background: linear-gradient(90deg, #14b8a6 0%, #2563eb 60%, transparent 100%);
   flex-shrink: 0;
 }
 
@@ -289,11 +289,11 @@
 }
 
 .request-card:hover {
-  border-color: rgba(139, 92, 246, 0.4);
+  border-color: rgba(20, 184, 166, 0.42);
   transform: translateY(-5px);
   box-shadow:
     0 28px 70px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(139, 92, 246, 0.12) inset;
+    0 0 0 1px rgba(20, 184, 166, 0.14) inset;
 }
 
 .request-card[data-status='pending']:hover {
@@ -325,7 +325,7 @@
   width: 46px;
   height: 46px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  background: linear-gradient(135deg, #0ea5a4 0%, #2563eb 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -333,7 +333,7 @@
   font-weight: 800;
   color: #fff;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+  box-shadow: 0 4px 14px rgba(14, 165, 164, 0.34);
 }
 
 .company-info {
@@ -354,7 +354,7 @@
   margin: 0 0 0.25rem;
   font-size: 0.88rem;
   font-weight: 600;
-  color: #a78bfa;
+  color: #5eead4;
 }
 
 .recruiter-info {
@@ -367,7 +367,7 @@
 }
 
 .email {
-  color: #7c3aed;
+  color: #38bdf8;
   opacity: 0.9;
 }
 

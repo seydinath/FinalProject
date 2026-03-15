@@ -13,6 +13,10 @@
   --ux-border-dark: rgba(255, 255, 255, 0.12);
   --ux-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
   --ux-shadow-hover: 0 18px 42px rgba(15, 23, 42, 0.2);
+  --ux-text-on-light-strong: #0f172a;
+  --ux-text-on-light: #334155;
+  --ux-text-on-dark-strong: #e2e8f0;
+  --ux-text-on-dark: #cbd5e1;
 }
 
 body {
@@ -122,6 +126,99 @@ body {
 ) {
   background-color: var(--ux-surface-dark);
   border: 1px solid var(--ux-border-dark);
+}
+
+/* Contrast guardrails: avoid dark-on-dark and faded text on content surfaces */
+.dark .page-content :where(
+  .dashboard-card,
+  .info-card,
+  .application-card,
+  .candidate-card,
+  .report-card,
+  .metric-card,
+  .stat-card,
+  .analytics-card,
+  .user-card,
+  .chart-card,
+  .pipeline-offer-card,
+  .opportunity-card,
+  .dashboard-live-panel,
+  .dashboard-live-section,
+  .auth-card,
+  .modal-content
+) {
+  color: var(--ux-text-on-dark-strong);
+}
+
+.dark .page-content :where(
+  .dashboard-card p,
+  .info-card p,
+  .application-card p,
+  .candidate-card p,
+  .report-card p,
+  .metric-card p,
+  .stat-card p,
+  .analytics-card p,
+  .user-card p,
+  .chart-card p,
+  .pipeline-offer-card p,
+  .opportunity-card p,
+  .dashboard-live-panel p,
+  .dashboard-live-section p,
+  .modal-content p,
+  .modal-content li,
+  .modal-content span,
+  .form-input-hint,
+  .form-help-text
+) {
+  color: var(--ux-text-on-dark);
+  opacity: 1;
+}
+
+.light .page-content :where(
+  .dashboard-card,
+  .info-card,
+  .application-card,
+  .candidate-card,
+  .report-card,
+  .metric-card,
+  .stat-card,
+  .analytics-card,
+  .user-card,
+  .chart-card,
+  .pipeline-offer-card,
+  .opportunity-card,
+  .dashboard-live-panel,
+  .dashboard-live-section,
+  .auth-card,
+  .modal-content
+) {
+  color: var(--ux-text-on-light-strong);
+}
+
+.light .page-content :where(
+  .dashboard-card p,
+  .info-card p,
+  .application-card p,
+  .candidate-card p,
+  .report-card p,
+  .metric-card p,
+  .stat-card p,
+  .analytics-card p,
+  .user-card p,
+  .chart-card p,
+  .pipeline-offer-card p,
+  .opportunity-card p,
+  .dashboard-live-panel p,
+  .dashboard-live-section p,
+  .modal-content p,
+  .modal-content li,
+  .modal-content span,
+  .form-input-hint,
+  .form-help-text
+) {
+  color: var(--ux-text-on-light);
+  opacity: 1;
 }
 
 .page-content :where(

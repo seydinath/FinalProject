@@ -180,6 +180,58 @@
   font-size: 0.85rem;
 }
 
+/* Second-pass color harmony and contrast */
+.dashboard-page.dark .job-seeker-applications h2 {
+  color: #e2e8f0;
+}
+
+.dashboard-page.dark .filter-btn {
+  border-color: rgba(148, 163, 184, 0.34);
+  background: rgba(30, 41, 59, 0.72);
+  color: #cbd5e1;
+}
+
+.dashboard-page.dark .filter-btn:hover {
+  border-color: rgba(94, 234, 212, 0.42);
+  color: #99f6e4;
+}
+
+.dashboard-page.dark .filter-btn.active {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  color: #ecfeff;
+}
+
+.dashboard-page.dark .application-card {
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.82), rgba(30, 41, 59, 0.76));
+  border-color: rgba(148, 163, 184, 0.26);
+}
+
+.dashboard-page.light .application-card {
+  background: linear-gradient(160deg, #ffffff, #f8fffd);
+  border-color: rgba(15, 118, 110, 0.14);
+}
+
+.dashboard-page.dark .detail-item .label,
+.dashboard-page.dark .timestamps small,
+.dashboard-page.dark .empty-state,
+.dashboard-page.dark .loading {
+  color: #94a3b8;
+}
+
+.dashboard-page.dark .detail-item .value {
+  color: #e2e8f0;
+}
+
+.dashboard-page.dark .timestamps {
+  border-top-color: rgba(148, 163, 184, 0.24);
+}
+
+.dashboard-page.dark .match-reason-pill {
+  background: rgba(30, 58, 138, 0.28);
+  color: #c7d2fe;
+  border: 1px solid rgba(129, 140, 248, 0.28);
+}
+
 @media (max-width: 768px) {
   .filter-buttons {
     flex-direction: column;

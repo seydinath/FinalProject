@@ -288,6 +288,65 @@
   cursor: not-allowed;
 }
 
+/* Second-pass color harmony and contrast */
+.dashboard-page.dark .recruiter-applications h2 {
+  color: #e2e8f0;
+}
+
+.dashboard-page.dark .pipeline-filter-btn {
+  border-color: rgba(148, 163, 184, 0.34);
+  background: rgba(30, 41, 59, 0.72);
+  color: #dbeafe;
+}
+
+.dashboard-page.dark .pipeline-filter-btn.active {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  color: #ecfeff;
+  border-color: rgba(94, 234, 212, 0.3);
+}
+
+.dashboard-page.dark .application-card {
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.82), rgba(30, 41, 59, 0.76));
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  color: #e2e8f0;
+}
+
+.dashboard-page.light .application-card {
+  background: linear-gradient(160deg, #ffffff, #f8fffd);
+  border: 1px solid rgba(15, 118, 110, 0.14);
+}
+
+.dashboard-page.dark .card-body .info-item label,
+.dashboard-page.dark .skills label,
+.dashboard-page.dark .cover-letter label,
+.dashboard-page.dark .meta-info,
+.dashboard-page.dark .loading,
+.dashboard-page.dark .empty-state {
+  color: #94a3b8;
+}
+
+.dashboard-page.dark .card-body .info-item p,
+.dashboard-page.dark .cover-letter p,
+.dashboard-page.dark .top-match-item,
+.dashboard-page.dark .skill-tag {
+  color: #e2e8f0;
+}
+
+.dashboard-page.dark .cover-letter {
+  background: rgba(15, 23, 42, 0.6);
+  border-left-color: #2dd4bf;
+}
+
+.dashboard-page.dark .card-actions {
+  background: rgba(15, 23, 42, 0.55);
+  border-top-color: rgba(148, 163, 184, 0.24);
+}
+
+.dashboard-page.light .card-actions {
+  background: rgba(247, 250, 252, 0.96);
+  border-top-color: rgba(148, 163, 184, 0.26);
+}
+
 @media (max-width: 768px) {
   .card-header {
     flex-direction: column;

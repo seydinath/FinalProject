@@ -10,6 +10,7 @@ import {
   markNotificationRead,
   type UserNotification,
 } from '../services/notificationService'
+import { getAdminSupportSummary } from '../services/supportService'
 
 interface TopNavProps {
   onLogout?: () => void
@@ -26,6 +27,7 @@ function TopNavContent({ onLogout }: TopNavProps) {
   const [notifications, setNotifications] = useState<UserNotification[]>([])
   const [unreadCount, setUnreadCount] = useState(0)
   const [loadingNotifications, setLoadingNotifications] = useState(false)
+  const [supportUnreadCount, setSupportUnreadCount] = useState(0)
   const breadcrumbs = getBreadcrumbs()
 
   const handleLogout = useCallback(() => {
@@ -58,6 +60,16 @@ function TopNavContent({ onLogout }: TopNavProps) {
     setLoadingNotifications(false)
   }, [isLoggedIn])
 
+  const loadSupportSummary = useCallback(async () => {
+    if (!isLoggedIn || !isAdmin) {
+      setSupportUnreadCount(0)
+      return
+    }
+
+    const summary = await getAdminSupportSummary()
+    setSupportUnreadCount(summary.unreadMessages)
+  }, [isAdmin, isLoggedIn])
+
   useEffect(() => {
     if (!isLoggedIn) {
       setNotifications([])
@@ -67,6 +79,7 @@ function TopNavContent({ onLogout }: TopNavProps) {
     }
 
     loadNotifications()
+    loadSupportSummary()
 
     const token = localStorage.getItem('authToken') || ''
     let socket: Socket | null = null
@@ -81,12 +94,24 @@ function TopNavContent({ onLogout }: TopNavProps) {
         setNotifications((current) => [incoming, ...current].slice(0, 20))
         setUnreadCount((count) => count + 1)
       })
+
+      socket.on('support:message', () => {
+        if (isAdmin) {
+          loadSupportSummary()
+        }
+      })
+
+      socket.on('support:conversation', () => {
+        if (isAdmin) {
+          loadSupportSummary()
+        }
+      })
     }
 
     return () => {
       socket?.disconnect()
     }
-  }, [isLoggedIn, loadNotifications, socketUrl])
+  }, [isAdmin, isLoggedIn, loadNotifications, loadSupportSummary, socketUrl])
 
   const handleOpenNotifications = useCallback(async () => {
     const nextState = !showNotificationsMenu
@@ -110,10 +135,14 @@ function TopNavContent({ onLogout }: TopNavProps) {
     }
 
     if (notification.link) {
-      if (notification.link.includes('job-seeker-applications')) {
+      if (notification.link.includes('user-management')) {
+        handleNavClick('user-management')
+      } else if (notification.link.includes('job-seeker-applications')) {
         handleNavClick('job-seeker-applications')
       } else if (notification.link.includes('recruiter-applications')) {
         handleNavClick('recruiter-applications')
+      } else if (notification.link.includes('notifications')) {
+        handleNavClick('notifications')
       } else {
         handleNavClick('dashboard')
       }
@@ -222,6 +251,7 @@ function TopNavContent({ onLogout }: TopNavProps) {
                 title={language === 'fr' ? 'Menu Admin' : 'Admin Menu'}
               >
                 🔐 {language === 'fr' ? 'Admin' : 'Admin'}
+                {supportUnreadCount > 0 && <span className="admin-support-badge">{supportUnreadCount > 9 ? '9+' : supportUnreadCount}</span>}
               </button>
               {showAdminMenu && (
                 <div className="admin-menu-popup">
@@ -233,6 +263,9 @@ function TopNavContent({ onLogout }: TopNavProps) {
                     >
                       <span className="admin-menu-icon">{item.icon}</span>
                       <span className="admin-menu-label">{item.label}</span>
+                      {item.page === 'user-management' && supportUnreadCount > 0 && (
+                        <span className="admin-menu-count">{supportUnreadCount > 9 ? '9+' : supportUnreadCount}</span>
+                      )}
                     </button>
                   ))}
                 </div>

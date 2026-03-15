@@ -3,7 +3,7 @@ import { apiRequest } from './apiClient'
 export type UserNotification = {
   _id: string
   userId: string
-  type: 'application_submitted' | 'application_accepted' | 'application_rejected' | 'job_request_approved' | 'job_request_rejected' | 'system'
+  type: 'application_submitted' | 'application_accepted' | 'application_rejected' | 'job_request_approved' | 'job_request_rejected' | 'support_message' | 'support_reply' | 'system'
   title: string
   message: string
   link?: string

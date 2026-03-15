@@ -11,6 +11,7 @@ import applicationRoutes from './routes/applications'
 import candidatesRoutes from './routes/candidates'
 import adminRoutes from './routes/admin'
 import notificationRoutes from './routes/notifications'
+import supportRoutes from './routes/support'
 import { initRealtime } from './services/realtime'
 
 export const app = express()
@@ -38,6 +39,7 @@ app.use('/applications', applicationRoutes)
 app.use('/candidates', candidatesRoutes)
 app.use('/admin', adminRoutes)
 app.use('/notifications', notificationRoutes)
+app.use('/support', supportRoutes)
 
 // 404 handler
 app.use((req, res) => {

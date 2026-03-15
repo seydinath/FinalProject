@@ -10,6 +10,8 @@ type NotificationType =
   | 'application_rejected'
   | 'job_request_approved'
   | 'job_request_rejected'
+  | 'support_message'
+  | 'support_reply'
   | 'system'
 
 export type CreateNotificationInput = {

@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { io, type Socket } from 'socket.io-client'
 import { useLanguage } from '../utils/LanguageContext'
 import {
   deleteAdminUser,
@@ -8,12 +9,30 @@ import {
   updateAdminUserRole,
   updateAdminUserStatus,
 } from '../services/adminService'
+import {
+  getAdminSupportSummary,
+  getAdminSupportConversations,
+  getSupportMessages,
+  markSupportThreadRead,
+  sendSupportMessage,
+  type SupportConversationSummary,
+  type SupportMessage,
+  updateSupportConversationStatus,
+} from '../services/supportService'
 import '../styles/UserManagementPage.css'
 
 const UserManagementPage = memo(() => {
   const { language } = useLanguage()
+  const socketUrl = useMemo(() => (import.meta as any).env.VITE_API_URL || 'http://localhost:5000', [])
   const [users, setUsers] = useState<AdminUser[]>([])
   const [loading, setLoading] = useState(true)
+  const [supportConversations, setSupportConversations] = useState<SupportConversationSummary[]>([])
+  const [selectedSupportUserId, setSelectedSupportUserId] = useState<string | null>(null)
+  const [supportMessages, setSupportMessages] = useState<SupportMessage[]>([])
+  const [supportLoading, setSupportLoading] = useState(false)
+  const [supportDraft, setSupportDraft] = useState('')
+  const [supportSending, setSupportSending] = useState(false)
+  const [supportOpenCount, setSupportOpenCount] = useState(0)
 
   const [searchTerm, setSearchTerm] = useState('')
   const [filterType, setFilterType] = useState<'all' | 'job_seeker' | 'recruiter' | 'admin'>('all')
@@ -21,14 +40,98 @@ const UserManagementPage = memo(() => {
 
   const loadUsers = useCallback(async () => {
     setLoading(true)
-    const result = await getAdminUsers()
+    const [result, conversations, summary] = await Promise.all([
+      getAdminUsers(),
+      getAdminSupportConversations(),
+      getAdminSupportSummary(),
+    ])
+
     setUsers(result?.users || [])
+    setSupportConversations(conversations)
+    setSupportOpenCount(summary.openConversations)
     setLoading(false)
+  }, [])
+
+  const refreshSupportSummary = useCallback(async () => {
+    const summary = await getAdminSupportSummary()
+    setSupportOpenCount(summary.openConversations)
   }, [])
 
   useEffect(() => {
     loadUsers()
   }, [loadUsers])
+
+  const loadSupportThread = useCallback(async (userId: string) => {
+    setSupportLoading(true)
+    setSelectedSupportUserId(userId)
+    const payload = await getSupportMessages(userId)
+    setSupportMessages(payload.messages)
+    if (payload.conversation) {
+      setSupportConversations((current) => {
+        const existing = current.find((item) => item.userId === userId)
+        if (!existing) return current
+        return current.map((item) => item.userId === userId ? { ...item, ...payload.conversation } : item)
+      })
+    }
+    await markSupportThreadRead(userId)
+    setSupportConversations((current) =>
+      current.map((item) => (item.userId === userId ? { ...item, unreadCount: 0 } : item))
+    )
+    setSupportLoading(false)
+  }, [])
+
+  useEffect(() => {
+    if (!selectedSupportUserId && supportConversations.length > 0) {
+      loadSupportThread(supportConversations[0].userId)
+    }
+  }, [loadSupportThread, selectedSupportUserId, supportConversations])
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken') || ''
+    if (!token) return
+
+    const socket: Socket = io(socketUrl, {
+      auth: { token },
+      transports: ['websocket'],
+    })
+
+    socket.on('support:message', (payload: { message?: SupportMessage; conversation?: SupportConversationSummary }) => {
+      if (payload.conversation) {
+        setSupportConversations((current) => {
+          const existing = current.find((item) => item.userId === payload.conversation?.userId)
+          const next = existing
+            ? current.map((item) => item.userId === payload.conversation?.userId ? { ...item, ...payload.conversation } : item)
+            : [payload.conversation as SupportConversationSummary, ...current]
+
+          return [...next].sort((a, b) => new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime())
+        })
+      }
+
+      if (payload.message && selectedSupportUserId === payload.message.userId) {
+        setSupportMessages((current) => {
+          if (current.some((item) => item._id === payload.message?._id)) {
+            return current
+          }
+          return [...current, payload.message as SupportMessage]
+        })
+      }
+
+      refreshSupportSummary()
+    })
+
+    socket.on('support:conversation', (payload: SupportConversationSummary) => {
+      setSupportConversations((current) => {
+        const existing = current.find((item) => item.userId === payload.userId)
+        if (!existing) return [payload, ...current]
+        return current.map((item) => item.userId === payload.userId ? { ...item, ...payload } : item)
+      })
+      refreshSupportSummary()
+    })
+
+    return () => {
+      socket.disconnect()
+    }
+  }, [refreshSupportSummary, selectedSupportUserId, socketUrl])
 
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
@@ -113,6 +216,74 @@ const UserManagementPage = memo(() => {
     }
     return status.charAt(0).toUpperCase() + status.slice(1)
   }
+
+  const selectedConversation = useMemo(
+    () => supportConversations.find((item) => item.userId === selectedSupportUserId) || null,
+    [selectedSupportUserId, supportConversations]
+  )
+
+  const selectedUser = useMemo(
+    () => users.find((item) => item.id === selectedSupportUserId) || null,
+    [selectedSupportUserId, users]
+  )
+
+  const formatSupportDate = (value: string) => {
+    try {
+      return new Date(value).toLocaleString(language === 'fr' ? 'fr-FR' : 'en-US', {
+        dateStyle: 'short',
+        timeStyle: 'short',
+      })
+    } catch {
+      return value
+    }
+  }
+
+  const handleSendSupportReply = useCallback(async () => {
+    const nextMessage = supportDraft.trim()
+    if (!selectedSupportUserId || !nextMessage || supportSending) return
+
+    setSupportSending(true)
+    const created = await sendSupportMessage(nextMessage, selectedSupportUserId)
+    if (created?.message) {
+      setSupportMessages((current) => [...current, created.message])
+      setSupportDraft('')
+      setSupportConversations((current) => {
+        const existing = current.find((item) => item.userId === selectedSupportUserId)
+        const updated: SupportConversationSummary = {
+          userId: selectedSupportUserId,
+          userName: existing?.userName || selectedUser?.name || 'Utilisateur',
+          userEmail: existing?.userEmail || selectedUser?.email || '',
+          userType: existing?.userType || (selectedUser?.type === 'admin' ? 'recruiter' : selectedUser?.type || 'job_seeker'),
+          unreadCount: 0,
+          lastMessage: created.message.message,
+          lastSenderRole: 'admin',
+          lastMessageAt: created.message.createdAt,
+          status: ((created.conversation as SupportConversationSummary | null)?.status) || 'open',
+          resolvedAt: ((created.conversation as SupportConversationSummary | null)?.resolvedAt) || null,
+          resolvedBy: ((created.conversation as SupportConversationSummary | null)?.resolvedBy) || null,
+        }
+
+        const remaining = current.filter((item) => item.userId !== selectedSupportUserId)
+        return [updated, ...remaining]
+      })
+    }
+    setSupportSending(false)
+  }, [selectedSupportUserId, supportDraft, supportSending, selectedUser])
+
+  const handleUpdateConversationStatus = useCallback(async (status: 'open' | 'resolved') => {
+    if (!selectedSupportUserId) return
+
+    const updated = await updateSupportConversationStatus(selectedSupportUserId, status)
+    if (!updated) return
+
+    setSupportConversations((current) => current.map((item) => item.userId === selectedSupportUserId ? updated : item))
+    setSupportOpenCount((current) => {
+      const wasOpen = selectedConversation?.status === 'open'
+      if (status === 'resolved' && wasOpen) return Math.max(current - 1, 0)
+      if (status === 'open' && !wasOpen) return current + 1
+      return current
+    })
+  }, [selectedConversation?.status, selectedSupportUserId])
 
   return (
     <div className="user-management-page">
@@ -238,6 +409,13 @@ const UserManagementPage = memo(() => {
                         </button>
                       )}
                       <button
+                        className="action-btn action-support"
+                        onClick={() => loadSupportThread(user.id)}
+                        title={language === 'fr' ? 'Ouvrir le canal' : 'Open channel'}
+                      >
+                        💬
+                      </button>
+                      <button
                         className="action-btn action-delete"
                         onClick={() => handleDeleteUser(user.id)}
                         title={language === 'fr' ? 'Supprimer' : 'Delete'}
@@ -265,6 +443,138 @@ const UserManagementPage = memo(() => {
             </p>
           </div>
         )}
+
+        <section className="support-admin-panel">
+          <div className="support-admin-header">
+            <div>
+              <h2>{language === 'fr' ? 'Canal admin-utilisateurs' : 'Admin-user channel'}</h2>
+              <p>
+                {language === 'fr'
+                  ? 'Echanges simples avec les utilisateurs, sans interface de chat lourde.'
+                  : 'Simple conversations with users, without a heavy chat interface.'}
+              </p>
+            </div>
+            <span className="support-open-counter">
+              {supportOpenCount} {language === 'fr' ? 'fil(s) ouverts' : 'open thread(s)'}
+            </span>
+          </div>
+
+          <div className="support-admin-layout">
+            <aside className="support-admin-sidebar">
+              {supportConversations.length === 0 && (
+                <p className="support-admin-empty">
+                  {language === 'fr' ? 'Aucun message utilisateur pour le moment.' : 'No user messages yet.'}
+                </p>
+              )}
+
+              {supportConversations.map((conversation) => (
+                <button
+                  key={conversation.userId}
+                  type="button"
+                  className={`support-conversation-item ${selectedSupportUserId === conversation.userId ? 'active' : ''}`}
+                  onClick={() => loadSupportThread(conversation.userId)}
+                >
+                  <div className="support-conversation-top">
+                    <strong>{conversation.userName}</strong>
+                    <div className="support-conversation-flags">
+                      <span className={`support-conversation-status ${conversation.status}`}>
+                        {conversation.status === 'resolved'
+                          ? (language === 'fr' ? 'Résolu' : 'Resolved')
+                          : (language === 'fr' ? 'Ouvert' : 'Open')}
+                      </span>
+                      {conversation.unreadCount > 0 && <span className="support-conversation-badge">{conversation.unreadCount}</span>}
+                    </div>
+                  </div>
+                  <span>{conversation.userEmail}</span>
+                  <p>{conversation.lastMessage}</p>
+                  <time>{formatSupportDate(conversation.lastMessageAt)}</time>
+                </button>
+              ))}
+            </aside>
+
+            <div className="support-thread-admin">
+              {!selectedSupportUserId && (
+                <p className="support-admin-empty">
+                  {language === 'fr' ? 'Selectionnez un utilisateur pour ouvrir le fil.' : 'Select a user to open the thread.'}
+                </p>
+              )}
+
+              {selectedSupportUserId && (
+                <>
+                  <div className="support-thread-admin-header">
+                    <div>
+                      <h3>{selectedConversation?.userName || selectedUser?.name || (language === 'fr' ? 'Utilisateur' : 'User')}</h3>
+                      <p>{selectedConversation?.userEmail || selectedUser?.email || ''}</p>
+                    </div>
+                    {selectedConversation && (
+                      <div className="support-thread-admin-actions">
+                        <span className={`support-conversation-status ${selectedConversation.status}`}>
+                          {selectedConversation.status === 'resolved'
+                            ? (language === 'fr' ? 'Résolu' : 'Resolved')
+                            : (language === 'fr' ? 'Ouvert' : 'Open')}
+                        </span>
+                        <button
+                          type="button"
+                          className="support-status-btn"
+                          onClick={() => handleUpdateConversationStatus(selectedConversation.status === 'open' ? 'resolved' : 'open')}
+                        >
+                          {selectedConversation.status === 'open'
+                            ? (language === 'fr' ? 'Marquer résolu' : 'Mark resolved')
+                            : (language === 'fr' ? 'Rouvrir' : 'Reopen')}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="support-thread-admin-list">
+                    {supportLoading && (
+                      <p className="support-admin-empty">{language === 'fr' ? 'Chargement du fil...' : 'Loading thread...'}</p>
+                    )}
+
+                    {!supportLoading && supportMessages.length === 0 && (
+                      <p className="support-admin-empty">{language === 'fr' ? 'Aucun message dans ce fil.' : 'No messages in this thread.'}</p>
+                    )}
+
+                    {!supportLoading && supportMessages.map((message) => (
+                      <article
+                        key={message._id}
+                        className={`support-admin-message ${message.senderRole === 'admin' ? 'from-admin' : 'from-user'}`}
+                      >
+                        <div className="support-admin-bubble">
+                          <strong>
+                            {message.senderRole === 'admin'
+                              ? 'Admin'
+                              : (selectedConversation?.userName || selectedUser?.name || (language === 'fr' ? 'Utilisateur' : 'User'))}
+                          </strong>
+                          <p>{message.message}</p>
+                          <time>{formatSupportDate(message.createdAt)}</time>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+
+                  <div className="support-thread-admin-composer">
+                    <textarea
+                      rows={3}
+                      value={supportDraft}
+                      onChange={(event) => setSupportDraft(event.target.value)}
+                      placeholder={language === 'fr' ? 'Repondre a cet utilisateur...' : 'Reply to this user...'}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleSendSupportReply}
+                      disabled={supportSending || !supportDraft.trim()}
+                    >
+                      {supportSending
+                        ? (language === 'fr' ? 'Envoi...' : 'Sending...')
+                        : (language === 'fr' ? 'Envoyer' : 'Send')}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   )

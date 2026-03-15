@@ -416,6 +416,20 @@
   opacity: 0.82;
 }
 
+.dashboard-page.dark .pipeline-offer-top p,
+.dashboard-page.dark .opportunity-copy,
+.dashboard-page.dark .top-match-item,
+.dashboard-page.dark .info-card li {
+  color: rgba(226, 232, 240, 0.92);
+}
+
+.dashboard-page.light .pipeline-offer-top p,
+.dashboard-page.light .opportunity-copy,
+.dashboard-page.light .top-match-item,
+.dashboard-page.light .info-card li {
+  color: #334155;
+}
+
 .match-pill {
   min-width: 58px;
   text-align: center;
@@ -439,6 +453,20 @@
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
   font-size: 0.82rem;
+}
+
+.dashboard-page.dark .pipeline-mini-stats span,
+.dashboard-page.dark .reason-pill {
+  background: rgba(148, 163, 184, 0.22);
+  color: rgba(241, 245, 249, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.dashboard-page.light .pipeline-mini-stats span,
+.dashboard-page.light .reason-pill {
+  background: rgba(15, 118, 110, 0.1);
+  color: #0f172a;
+  border: 1px solid rgba(15, 118, 110, 0.18);
 }
 
 .top-match-list {
@@ -488,6 +516,24 @@
 
 .opportunity-preview-modal {
   max-width: min(760px, 96vw);
+  border: 1px solid rgba(20, 184, 166, 0.28);
+  box-shadow: 0 20px 56px rgba(2, 6, 23, 0.28);
+}
+
+.dashboard-page.dark .opportunity-preview-modal {
+  background:
+    radial-gradient(circle at 4% 0%, rgba(20, 184, 166, 0.22), rgba(15, 23, 42, 0.96) 38%),
+    linear-gradient(155deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.94));
+  color: #e2e8f0;
+  border-color: rgba(94, 234, 212, 0.3);
+}
+
+.dashboard-page.light .opportunity-preview-modal {
+  background:
+    radial-gradient(circle at 4% 0%, rgba(20, 184, 166, 0.16), rgba(255, 255, 255, 0.98) 42%),
+    linear-gradient(165deg, #f8fffd, #ffffff);
+  color: #0f172a;
+  border-color: rgba(13, 148, 136, 0.26);
 }
 
 .opportunity-preview-head {
@@ -501,26 +547,86 @@
 .opportunity-preview-head h3 {
   margin: 0;
   font-size: 1.35rem;
+  line-height: 1.3;
 }
 
 .opportunity-preview-company {
   margin: 0 0 0.9rem;
-  opacity: 0.8;
+  opacity: 0.88;
+  font-weight: 600;
+  color: #0f766e;
+}
+
+.dashboard-page.dark .opportunity-preview-company {
+  color: #5eead4;
 }
 
 .opportunity-preview-copy {
   margin: 0 0 1rem;
   line-height: 1.55;
+  opacity: 1;
+  color: inherit;
 }
 
 .preview-block {
   margin-bottom: 0.85rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(78, 205, 196, 0.2);
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.dashboard-page.light .preview-block {
+  background: rgba(15, 118, 110, 0.06);
+  border-color: rgba(13, 148, 136, 0.2);
+}
+
+.dashboard-page.dark .preview-block {
+  background: rgba(30, 41, 59, 0.74);
+  border-color: rgba(94, 234, 212, 0.22);
 }
 
 .preview-block h4 {
   margin: 0 0 0.45rem;
   font-size: 0.95rem;
-  opacity: 0.92;
+  opacity: 0.98;
+  color: #0f766e;
+}
+
+.dashboard-page.dark .preview-block h4 {
+  color: #5eead4;
+}
+
+.opportunity-preview-modal .reason-pill {
+  background: rgba(15, 118, 110, 0.14);
+  border: 1px solid rgba(13, 148, 136, 0.22);
+}
+
+.dashboard-page.dark .opportunity-preview-modal .reason-pill {
+  background: rgba(20, 184, 166, 0.16);
+  border-color: rgba(94, 234, 212, 0.24);
+}
+
+.opportunity-preview-modal .match-pill {
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.24), rgba(14, 116, 144, 0.22));
+  border: 1px solid rgba(15, 118, 110, 0.3);
+}
+
+.dashboard-page.dark .opportunity-preview-modal .match-pill {
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.22), rgba(14, 165, 233, 0.2));
+  border-color: rgba(94, 234, 212, 0.34);
+}
+
+.opportunity-preview-modal .opportunity-action-link {
+  border-color: rgba(13, 148, 136, 0.35);
+  background: rgba(241, 245, 249, 0.9);
+  color: #0f172a;
+}
+
+.dashboard-page.dark .opportunity-preview-modal .opportunity-action-link {
+  border-color: rgba(94, 234, 212, 0.35);
+  background: rgba(15, 23, 42, 0.68);
+  color: #e2e8f0;
 }
 
 /* Responsive */

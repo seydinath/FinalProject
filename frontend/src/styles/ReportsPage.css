@@ -15,7 +15,7 @@
   right: -10%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.1) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
@@ -75,7 +75,7 @@
 }
 
 .generate-report-btn {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #0ea5a4 0%, #2563eb 100%);
   color: white;
   border: none;
   padding: 0.85rem 1.8rem;
@@ -86,12 +86,12 @@
   text-transform: uppercase;
   font-size: 0.85rem;
   letter-spacing: 0.5px;
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.24);
 }
 
 .generate-report-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 30px rgba(20, 184, 166, 0.38);
 }
 
 /* Generate Form */
@@ -170,7 +170,7 @@
 
 .form-select:focus {
   outline: none;
-  border-color: rgba(139, 92, 246, 0.5);
+  border-color: rgba(20, 184, 166, 0.55);
   background: rgba(226, 232, 240, 0.12);
 }
 
@@ -180,7 +180,7 @@
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #0ea5a4 0%, #2563eb 100%);
   border: none;
   color: white;
   padding: 0.85rem 2rem;
@@ -191,12 +191,12 @@
   text-transform: uppercase;
   font-size: 0.85rem;
   letter-spacing: 0.5px;
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.24);
 }
 
 .submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 30px rgba(20, 184, 166, 0.38);
 }
 
 /* Reports Content */
@@ -259,19 +259,19 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.55), rgba(37, 99, 235, 0.45), transparent);
 }
 
 .report-card:hover {
   transform: translateY(-4px);
   border-color: rgba(226, 232, 240, 0.2);
   background: rgba(226, 232, 240, 0.12);
-  box-shadow: 0 30px 60px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 30px 60px rgba(14, 165, 164, 0.2);
 }
 
 .report-card.selected {
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
-  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 0 30px rgba(20, 184, 166, 0.3);
+  border-color: rgba(20, 184, 166, 0.45);
   background: rgba(226, 232, 240, 0.12);
 }
 
@@ -300,14 +300,14 @@
 
 .report-card-date {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: #b8c7dc;
   margin: 0;
   font-weight: 500;
 }
 
 .report-card-type {
   display: inline-block;
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #14b8a6 0%, #2563eb 100%);
   color: #f1f5f9;
   padding: 0.4rem 0.95rem;
   border-radius: 8px;
@@ -316,7 +316,7 @@
   width: fit-content;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 15px rgba(20, 184, 166, 0.24);
 }
 
 .no-reports-message {
@@ -395,7 +395,7 @@
 .detail-label {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #94a3b8;
+  color: #b8c7dc;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin: 0;

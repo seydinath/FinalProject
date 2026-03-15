@@ -363,6 +363,64 @@
   margin-bottom: 2rem;
 }
 
+/* Second-pass color harmony and contrast */
+.talent-search-page.dark .talent-search-header p,
+.talent-search-page.dark .candidates-header p,
+.talent-search-page.dark .domain-card p,
+.talent-search-page.dark .candidate-location,
+.talent-search-page.dark .candidate-count {
+  color: #cbd5e1;
+  opacity: 1;
+}
+
+.talent-search-page.light .talent-search-header p,
+.talent-search-page.light .candidates-header p,
+.talent-search-page.light .domain-card p,
+.talent-search-page.light .candidate-location,
+.talent-search-page.light .candidate-count {
+  color: #334155;
+  opacity: 1;
+}
+
+.talent-search-page.dark .domain-card,
+.talent-search-page.dark .candidate-card {
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.84), rgba(30, 41, 59, 0.74));
+  border-color: rgba(148, 163, 184, 0.24);
+}
+
+.talent-search-page.light .domain-card,
+.talent-search-page.light .candidate-card {
+  background: linear-gradient(160deg, #ffffff, #f8fffd);
+  border-color: rgba(15, 118, 110, 0.14);
+}
+
+.talent-search-page.dark .candidate-title,
+.talent-search-page.dark .domain-card h3,
+.talent-search-page.dark .candidate-card h3 {
+  color: #e2e8f0;
+}
+
+.talent-search-page.light .domain-card h3,
+.talent-search-page.light .candidate-card h3 {
+  color: #0f172a;
+}
+
+.talent-search-page.dark .candidate-exp,
+.talent-search-page.dark .skill-badge,
+.talent-search-page.dark .skill-more {
+  background: rgba(30, 64, 175, 0.25);
+  color: #c7d2fe;
+  border: 1px solid rgba(129, 140, 248, 0.25);
+}
+
+.talent-search-page.light .candidate-exp,
+.talent-search-page.light .skill-badge,
+.talent-search-page.light .skill-more {
+  background: rgba(13, 148, 136, 0.12);
+  color: #0f172a;
+  border: 1px solid rgba(13, 148, 136, 0.2);
+}
+
 .candidate-profile-page.dark .profile-overview {
   background: rgba(26, 26, 46, 0.6);
   border-color: rgba(255, 255, 255, 0.1);
