@@ -1,54 +1,19 @@
 import { Router, Response } from 'express'
 import mongoose from 'mongoose'
 import bcryptjs from 'bcryptjs'
-import crypto from 'crypto'
 import multer from 'multer'
 import fs from 'fs'
 import path from 'path'
 import { User } from '../models/User'
-import { config } from '../config/env'
 import { generateToken, authenticateToken, AuthRequest } from '../middleware/auth'
 import { validateBody } from '../middleware/validation'
 import { createRateLimiter } from '../middleware/rateLimit'
-import { sendEmail, isEmailServiceConfigured } from '../services/email'
 
 const router = Router()
 const authWriteLimiter = createRateLimiter({
   windowSizeSeconds: 60,
   maxRequests: 20,
 })
-
-const EMAIL_VERIFICATION_TTL_MS = 1000 * 60 * 60 * 24 // 24h
-
-function buildVerificationLink(token: string): string {
-  const frontendBaseUrl = config.corsOrigin.replace(/\/+$/, '')
-  return `${frontendBaseUrl}/?page=auth&verifyEmailToken=${encodeURIComponent(token)}`
-}
-
-async function assignAndSendVerificationEmail(user: any): Promise<boolean> {
-  const verificationToken = crypto.randomBytes(32).toString('hex')
-  user.emailVerificationTokenHash = crypto
-    .createHash('sha256')
-    .update(verificationToken)
-    .digest('hex')
-  user.emailVerificationExpiresAt = new Date(Date.now() + EMAIL_VERIFICATION_TTL_MS)
-  await user.save()
-
-  const verificationUrl = buildVerificationLink(verificationToken)
-  return sendEmail({
-    to: user.email,
-    subject: 'Confirmez votre adresse email - JobConnect',
-    text: `Bonjour ${user.name},\n\nConfirmez votre adresse email en ouvrant ce lien:\n${verificationUrl}\n\nCe lien expire dans 24 heures.\n\nJobConnect`,
-    html: `
-      <p>Bonjour ${user.name},</p>
-      <p>Confirmez votre adresse email en cliquant sur ce bouton :</p>
-      <p><a href="${verificationUrl}" style="display:inline-block;padding:10px 16px;background:#0f766e;color:#ffffff;text-decoration:none;border-radius:8px;">Verifier mon email</a></p>
-      <p>Ce lien expire dans 24 heures.</p>
-      <p>Si le bouton ne fonctionne pas, copiez ce lien:</p>
-      <p>${verificationUrl}</p>
-    `,
-  })
-}
 
 const uploadDir = path.join(process.cwd(), 'uploads', 'cv')
 if (!fs.existsSync(uploadDir)) {
@@ -106,36 +71,10 @@ router.post('/register', authWriteLimiter, validateBody([
       password: hashedPassword,
       name,
       userType,
-      isVerified: false,
+      isVerified: true,
     })
+    await user.save()
 
-    const emailConfigured = isEmailServiceConfigured()
-    if (emailConfigured) {
-      const emailSent = await assignAndSendVerificationEmail(user)
-
-      if (!emailSent) {
-        // Prevent account lockout when SMTP is misconfigured in runtime.
-        user.isVerified = true
-        user.emailVerifiedAt = new Date()
-        user.emailVerificationTokenHash = undefined
-        user.emailVerificationExpiresAt = undefined
-        await user.save()
-      }
-    } else {
-      // Fallback for local/dev without SMTP: keep existing UX.
-      user.isVerified = true
-      user.emailVerifiedAt = new Date()
-      await user.save()
-    }
-
-    if (!user.isVerified) {
-      return res.status(201).json({
-        requiresEmailVerification: true,
-        message: 'Account created. Please verify your email before logging in.',
-      })
-    }
-
-    // Fallback path (email disabled/unavailable): keep immediate login.
     const token = generateToken(user._id.toString())
 
     res.status(201).json({
@@ -174,13 +113,6 @@ router.post('/login', authWriteLimiter, validateBody([
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password')
     if (!user) {
       return res.status(401).json({ error: 'Invalid credentials' })
-    }
-
-    if (!user.isVerified) {
-      return res.status(403).json({
-        error: 'Email not verified. Please verify your email before logging in.',
-        requiresEmailVerification: true,
-      })
     }
 
     // Vérifier le mot de passe
@@ -235,9 +167,6 @@ router.post('/google-login', authWriteLimiter, validateBody([
         user.name = user.name || name
         user.avatar = avatar || user.avatar
         user.isVerified = true
-        user.emailVerifiedAt = user.emailVerifiedAt || new Date()
-        user.emailVerificationTokenHash = undefined
-        user.emailVerificationExpiresAt = undefined
 
         if (!user.userType) {
           user.userType = userType || 'job_seeker'
@@ -252,7 +181,6 @@ router.post('/google-login', authWriteLimiter, validateBody([
           avatar,
           userType: userType || 'job_seeker',
           isVerified: true,
-          emailVerifiedAt: new Date(),
         })
         await user.save()
       }
@@ -275,76 +203,6 @@ router.post('/google-login', authWriteLimiter, validateBody([
   } catch (error) {
     console.error('Google login error:', error)
     res.status(500).json({ error: 'Authentication failed' })
-  }
-})
-
-router.post('/verify-email', authWriteLimiter, validateBody([
-  { field: 'token', type: 'string', required: true, minLength: 20, maxLength: 300 },
-]), async (req: AuthRequest, res: Response) => {
-  try {
-    const { token } = req.body
-
-    if (!token) {
-      return res.status(400).json({ error: 'Verification token is required' })
-    }
-
-    const tokenHash = crypto.createHash('sha256').update(token).digest('hex')
-
-    const user = await User.findOne({
-      emailVerificationTokenHash: tokenHash,
-      emailVerificationExpiresAt: { $gt: new Date() },
-    }).select('+emailVerificationTokenHash +emailVerificationExpiresAt')
-
-    if (!user) {
-      return res.status(400).json({ error: 'Invalid or expired verification link' })
-    }
-
-    user.isVerified = true
-    user.emailVerifiedAt = new Date()
-    user.emailVerificationTokenHash = undefined
-    user.emailVerificationExpiresAt = undefined
-    await user.save()
-
-    return res.json({
-      message: 'Email verified successfully. You can now log in.',
-    })
-  } catch (error) {
-    console.error('Verify email error:', error)
-    return res.status(500).json({ error: 'Failed to verify email' })
-  }
-})
-
-router.post('/resend-verification-email', authWriteLimiter, validateBody([
-  { field: 'email', type: 'string', required: true, minLength: 5, maxLength: 120 },
-]), async (req: AuthRequest, res: Response) => {
-  try {
-    const { email } = req.body
-    const normalizedEmail = String(email || '').toLowerCase().trim()
-
-    const user = await User.findOne({ email: normalizedEmail })
-
-    // Always return 200 to avoid account enumeration.
-    if (!user) {
-      return res.json({ message: 'If this account exists, a verification email has been sent.' })
-    }
-
-    if (user.isVerified) {
-      return res.json({ message: 'Email is already verified.' })
-    }
-
-    if (!isEmailServiceConfigured()) {
-      return res.status(400).json({ error: 'Email service is not configured.' })
-    }
-
-    const sent = await assignAndSendVerificationEmail(user)
-    if (!sent) {
-      return res.status(500).json({ error: 'Failed to send verification email.' })
-    }
-
-    return res.json({ message: 'Verification email resent successfully.' })
-  } catch (error) {
-    console.error('Resend verification email error:', error)
-    return res.status(500).json({ error: 'Failed to resend verification email' })
   }
 })
 

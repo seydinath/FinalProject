@@ -40,7 +40,6 @@ export interface UserProfile {
 export interface AuthResponse {
   token?: string
   message?: string
-  requiresEmailVerification?: boolean
   user: {
     id: string
     email: string
@@ -56,7 +55,6 @@ export interface AuthResponse {
 export interface RegisterResponse {
   token?: string
   message?: string
-  requiresEmailVerification?: boolean
   user?: AuthResponse['user']
 }
 
@@ -134,34 +132,6 @@ export async function googleLoginUser(payload: GoogleLoginPayload): Promise<Auth
   throw new Error(response.error || 'Google sign-in failed')
 }
 
-export async function verifyEmailToken(token: string): Promise<boolean> {
-  const response = await apiRequest<{ message: string }>('/auth/verify-email', {
-    method: 'POST',
-    body: { token },
-    token: '',
-  })
-
-  if (response.success) {
-    return true
-  }
-
-  throw new Error(response.error || 'Email verification failed')
-}
-
-export async function resendVerificationEmail(email: string): Promise<boolean> {
-  const response = await apiRequest<{ message: string }>('/auth/resend-verification-email', {
-    method: 'POST',
-    body: { email },
-    token: '',
-  })
-
-  if (response.success) {
-    return true
-  }
-
-  throw new Error(response.error || 'Failed to resend verification email')
-}
-
 /**
  * Déconnexion utilisateur
  */
@@ -223,8 +193,6 @@ export default {
   loginUser,
   registerUser,
   googleLoginUser,
-  verifyEmailToken,
-  resendVerificationEmail,
   logoutUser,
   getStoredUser,
   storeUser,

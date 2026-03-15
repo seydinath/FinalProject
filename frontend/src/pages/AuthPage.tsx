@@ -9,7 +9,6 @@ import { FormInput } from '../components/FormInput'
 import { PasswordStrengthMeter } from '../components/PasswordStrengthMeter'
 import { LoadingButton } from '../components/Loading'
 import { LoginCharacter } from '../components/LoginCharacter'
-import { resendVerificationEmail, verifyEmailToken } from '../services/authService'
 
 interface AuthPageProps {
   onAuthSuccess?: () => void
@@ -28,8 +27,6 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
   const [charIsSad, setCharIsSad] = useState(false)
   const [charIsHappy, setCharIsHappy] = useState(false)
   const [googleReady, setGoogleReady] = useState(false)
-  const [showResendVerification, setShowResendVerification] = useState(false)
-  const [isResendingVerification, setIsResendingVerification] = useState(false)
 
   useEffect(() => {
     const existing = document.getElementById('google-gsi-sdk') as HTMLScriptElement | null
@@ -50,34 +47,6 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
     }
     document.head.appendChild(script)
   }, [language, showError])
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const verifyToken = params.get('verifyEmailToken')
-    if (!verifyToken) {
-      return
-    }
-
-    const runVerification = async () => {
-      try {
-        const ok = await verifyEmailToken(verifyToken)
-        if (ok) {
-          success(language === 'fr' ? 'Email verifie. Vous pouvez vous connecter.' : 'Email verified. You can now sign in.')
-          setIsLogin(true)
-        }
-      } catch (err) {
-        showError(language === 'fr' ? 'Lien de verification invalide ou expire' : 'Invalid or expired verification link')
-      } finally {
-        params.delete('verifyEmailToken')
-        params.set('page', 'auth')
-        const query = params.toString()
-        const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname
-        window.history.replaceState({}, '', nextUrl)
-      }
-    }
-
-    runVerification()
-  }, [language, showError, success])
 
   // Form validation state
   const { 
@@ -129,9 +98,7 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
           if (loginSuccess) {
             const message = isLogin
               ? (language === 'fr' ? 'Connexion reussie. Bienvenue.' : 'Sign in successful. Welcome.')
-              : (language === 'fr'
-                  ? 'Compte cree. Verifiez votre email puis connectez-vous.'
-                  : 'Account created. Verify your email, then sign in.')
+              : (language === 'fr' ? 'Compte cree avec succes. Bienvenue.' : 'Account created successfully. Welcome.')
             success(message)
             setCharIsHappy(true)
             setTimeout(() => setCharIsHappy(false), 2000)
@@ -140,13 +107,9 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
               setIsLogin(true)
               return
             }
-
-            setShowResendVerification(false)
           } else {
             const message = authError || (language === 'fr' ? 'Erreur d\'authentification' : 'Authentication error')
             showError(message)
-            const requiresVerification = /email not verified|verify your email|email non verifie|verifiez votre email/i.test(message)
-            setShowResendVerification(requiresVerification)
             setCharIsShaking(true)
             setCharIsSad(true)
             setTimeout(() => { setCharIsShaking(false); setCharIsSad(false) }, 1500)
@@ -164,10 +127,6 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
             ? err.message
             : (language === 'fr' ? 'Une erreur est survenue' : 'An error occurred')
           showError(message)
-          if (isLogin) {
-            const requiresVerification = /email not verified|verify your email|email non verifie|verifiez votre email/i.test(message)
-            setShowResendVerification(requiresVerification)
-          }
         }
       }
     }
@@ -228,8 +187,6 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
         return
       }
 
-      setShowResendVerification(false)
-
       success(language === 'fr' ? 'Connexion Google réussie' : 'Google sign-in successful')
       setCharIsHappy(true)
       setTimeout(() => setCharIsHappy(false), 2000)
@@ -240,28 +197,6 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
     } catch (error) {
       console.error('Google auth error:', error)
       showError(language === 'fr' ? 'Erreur Google OAuth' : 'Google OAuth error')
-    }
-  }
-
-  const handleResendVerification = async () => {
-    const emailValue = formState.email.value?.trim()
-
-    if (!emailValue) {
-      showError(language === 'fr' ? 'Saisissez votre email pour renvoyer le lien.' : 'Enter your email to resend the link.')
-      return
-    }
-
-    try {
-      setIsResendingVerification(true)
-      await resendVerificationEmail(emailValue)
-      success(language === 'fr' ? 'Email de verification renvoye.' : 'Verification email resent.')
-    } catch (err) {
-      const message = err instanceof Error
-        ? err.message
-        : (language === 'fr' ? 'Impossible de renvoyer l\'email de verification.' : 'Unable to resend verification email.')
-      showError(message)
-    } finally {
-      setIsResendingVerification(false)
     }
   }
 
@@ -463,19 +398,6 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
             <span className="google-icon">🔵</span>
             {language === 'fr' ? 'Continuer avec Google' : 'Continue with Google'}
           </button>
-
-          {showResendVerification && (
-            <button
-              type="button"
-              className="btn-resend-verification"
-              onClick={handleResendVerification}
-              disabled={isResendingVerification || isSubmitting || isLoading}
-            >
-              {isResendingVerification
-                ? (language === 'fr' ? 'Envoi...' : 'Sending...')
-                : (language === 'fr' ? 'Renvoyer l\'email de verification' : 'Resend verification email')}
-            </button>
-          )}
 
           {/* Toggle Auth Type */}
           <p className="auth-toggle">
