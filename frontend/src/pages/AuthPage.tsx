@@ -145,7 +145,7 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
           } else {
             const message = authError || (language === 'fr' ? 'Erreur d\'authentification' : 'Authentication error')
             showError(message)
-            const requiresVerification = /email not verified|verify your email/i.test(message)
+            const requiresVerification = /email not verified|verify your email|email non verifie|verifiez votre email/i.test(message)
             setShowResendVerification(requiresVerification)
             setCharIsShaking(true)
             setCharIsSad(true)
@@ -160,7 +160,14 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
             onAuthSuccess()
           }
         } catch (err) {
-          showError(language === 'fr' ? 'Une erreur est survenue' : 'An error occurred')
+          const message = err instanceof Error
+            ? err.message
+            : (language === 'fr' ? 'Une erreur est survenue' : 'An error occurred')
+          showError(message)
+          if (isLogin) {
+            const requiresVerification = /email not verified|verify your email|email non verifie|verifiez votre email/i.test(message)
+            setShowResendVerification(requiresVerification)
+          }
         }
       }
     }
@@ -248,8 +255,11 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
       setIsResendingVerification(true)
       await resendVerificationEmail(emailValue)
       success(language === 'fr' ? 'Email de verification renvoye.' : 'Verification email resent.')
-    } catch (_err) {
-      showError(language === 'fr' ? 'Impossible de renvoyer l\'email de verification.' : 'Unable to resend verification email.')
+    } catch (err) {
+      const message = err instanceof Error
+        ? err.message
+        : (language === 'fr' ? 'Impossible de renvoyer l\'email de verification.' : 'Unable to resend verification email.')
+      showError(message)
     } finally {
       setIsResendingVerification(false)
     }

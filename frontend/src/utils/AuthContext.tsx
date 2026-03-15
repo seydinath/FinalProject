@@ -74,8 +74,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false
     } catch (error) {
       console.error('Login error:', error)
-      setAuthError(error instanceof Error ? error.message : 'Login failed')
-      return false
+      const message = error instanceof Error ? error.message : 'Login failed'
+      setAuthError(message)
+      throw new Error(message)
     } finally {
       setIsLoading(false)
     }
@@ -126,8 +127,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false
     } catch (error) {
       console.error('Register error:', error)
-      setAuthError(error instanceof Error ? error.message : 'Registration failed')
-      return false
+      const message = error instanceof Error ? error.message : 'Registration failed'
+      setAuthError(message)
+      throw new Error(message)
     } finally {
       setIsLoading(false)
     }
@@ -167,8 +169,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false
     } catch (error) {
       console.error('Google login error:', error)
-      setAuthError(error instanceof Error ? error.message : 'Google sign-in failed')
-      return false
+      const message = error instanceof Error ? error.message : 'Google sign-in failed'
+      setAuthError(message)
+      throw new Error(message)
     } finally {
       setIsLoading(false)
     }

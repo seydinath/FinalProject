@@ -25,6 +25,9 @@ function getTransporter(): nodemailer.Transporter | null {
     host: config.emailHost,
     port: Number(config.emailPort),
     secure: Number(config.emailPort) === 465,
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
     auth: {
       user: config.emailUser,
       pass: config.emailPass,
