@@ -450,14 +450,7 @@
 }
 
 /* Password toggle */
-.password-field-wrapper {
-  position: relative;
-}
-
 .password-toggle-btn {
-  position: absolute;
-  right: 10px;
-  bottom: 12px;
   background: none;
   border: none;
   cursor: pointer;
@@ -466,7 +459,6 @@
   display: flex;
   align-items: center;
   transition: color 0.2s ease;
-  z-index: 2;
 }
 
 .password-toggle-btn:hover {

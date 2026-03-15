@@ -83,12 +83,12 @@ interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   children: React.ReactNode
 }
 
-function LoadingButtonContent({ loading, children, disabled, ...props }: LoadingButtonProps) {
+function LoadingButtonContent({ loading, children, disabled, className, ...props }: LoadingButtonProps) {
   return (
     <button
       {...props}
       disabled={disabled || loading}
-      className={`btn-loading ${loading ? 'is-loading' : ''}`}
+      className={`btn-loading ${loading ? 'is-loading' : ''} ${className ?? ''}`}
     >
       {loading ? (
         <>

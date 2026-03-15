@@ -11,6 +11,7 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: string
   hint?: string
   successMessage?: string
+  rightElement?: React.ReactNode
 }
 
 function FormInputContent({
@@ -23,6 +24,7 @@ function FormInputContent({
   icon,
   hint,
   successMessage,
+  rightElement,
   className = '',
   ...props
 }: FormInputProps) {
@@ -52,15 +54,19 @@ function FormInputContent({
             ${hasError ? 'form-input-error' : ''}
             ${isValid ? 'form-input-valid' : ''}
             ${icon ? 'with-icon' : ''}
+            ${rightElement ? 'with-right-addon' : ''}
             ${className}
           `}
           {...props}
         />
 
-        {isValid && (
+        {rightElement && (
+          <span className="form-input-right-addon">{rightElement}</span>
+        )}
+        {!rightElement && isValid && (
           <span className="form-input-status valid">✓</span>
         )}
-        {hasError && (
+        {!rightElement && hasError && (
           <span className="form-input-status error">✕</span>
         )}
       </div>

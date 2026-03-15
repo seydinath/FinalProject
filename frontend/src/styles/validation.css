@@ -43,6 +43,20 @@
   transition: opacity 0.3s ease;
 }
 
+.form-input-right-addon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding-right: 0.5rem;
+}
+
+.form-input.with-right-addon {
+  padding-right: 2.75rem;
+}
+
 /* Form Input Base */
 .form-input {
   width: 100%;
