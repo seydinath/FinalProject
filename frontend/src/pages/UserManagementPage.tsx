@@ -33,6 +33,8 @@ const UserManagementPage = memo(() => {
   const [supportDraft, setSupportDraft] = useState('')
   const [supportSending, setSupportSending] = useState(false)
   const [supportOpenCount, setSupportOpenCount] = useState(0)
+  const [supportSearchTerm, setSupportSearchTerm] = useState('')
+  const [supportFilter, setSupportFilter] = useState<'all' | 'open' | 'resolved' | 'unread'>('all')
 
   const [searchTerm, setSearchTerm] = useState('')
   const [filterType, setFilterType] = useState<'all' | 'job_seeker' | 'recruiter' | 'admin'>('all')
@@ -226,6 +228,24 @@ const UserManagementPage = memo(() => {
     () => users.find((item) => item.id === selectedSupportUserId) || null,
     [selectedSupportUserId, users]
   )
+
+  const filteredSupportConversations = useMemo(() => {
+    const search = supportSearchTerm.trim().toLowerCase()
+
+    return supportConversations.filter((item) => {
+      const matchesSearch = !search
+        || item.userName.toLowerCase().includes(search)
+        || item.userEmail.toLowerCase().includes(search)
+        || item.lastMessage.toLowerCase().includes(search)
+
+      const matchesFilter = supportFilter === 'all'
+        || (supportFilter === 'open' && item.status === 'open')
+        || (supportFilter === 'resolved' && item.status === 'resolved')
+        || (supportFilter === 'unread' && item.unreadCount > 0)
+
+      return matchesSearch && matchesFilter
+    })
+  }, [supportConversations, supportFilter, supportSearchTerm])
 
   const formatSupportDate = (value: string) => {
     try {
@@ -461,13 +481,38 @@ const UserManagementPage = memo(() => {
 
           <div className="support-admin-layout">
             <aside className="support-admin-sidebar">
+              <div className="support-sidebar-controls">
+                <input
+                  type="text"
+                  value={supportSearchTerm}
+                  onChange={(event) => setSupportSearchTerm(event.target.value)}
+                  placeholder={language === 'fr' ? 'Rechercher un fil...' : 'Search a thread...'}
+                />
+
+                <select
+                  value={supportFilter}
+                  onChange={(event) => setSupportFilter(event.target.value as 'all' | 'open' | 'resolved' | 'unread')}
+                >
+                  <option value="all">{language === 'fr' ? 'Tous les fils' : 'All threads'}</option>
+                  <option value="open">{language === 'fr' ? 'Ouverts' : 'Open'}</option>
+                  <option value="resolved">{language === 'fr' ? 'Résolus' : 'Resolved'}</option>
+                  <option value="unread">{language === 'fr' ? 'Non lus' : 'Unread'}</option>
+                </select>
+              </div>
+
               {supportConversations.length === 0 && (
                 <p className="support-admin-empty">
                   {language === 'fr' ? 'Aucun message utilisateur pour le moment.' : 'No user messages yet.'}
                 </p>
               )}
 
-              {supportConversations.map((conversation) => (
+              {supportConversations.length > 0 && filteredSupportConversations.length === 0 && (
+                <p className="support-admin-empty">
+                  {language === 'fr' ? 'Aucun fil ne correspond aux filtres.' : 'No threads match current filters.'}
+                </p>
+              )}
+
+              {filteredSupportConversations.map((conversation) => (
                 <button
                   key={conversation.userId}
                   type="button"
@@ -505,6 +550,15 @@ const UserManagementPage = memo(() => {
                     <div>
                       <h3>{selectedConversation?.userName || selectedUser?.name || (language === 'fr' ? 'Utilisateur' : 'User')}</h3>
                       <p>{selectedConversation?.userEmail || selectedUser?.email || ''}</p>
+                      {selectedConversation?.resolvedAt && (
+                        <p className="support-thread-audit">
+                          {language === 'fr' ? 'Résolu le ' : 'Resolved on '}
+                          {formatSupportDate(selectedConversation.resolvedAt)}
+                          {selectedConversation.resolvedBy?.name
+                            ? `${language === 'fr' ? ' par ' : ' by '}${selectedConversation.resolvedBy.name}`
+                            : ''}
+                        </p>
+                      )}
                     </div>
                     {selectedConversation && (
                       <div className="support-thread-admin-actions">

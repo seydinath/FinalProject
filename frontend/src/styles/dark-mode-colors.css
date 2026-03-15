@@ -5,7 +5,7 @@
 :root {
   /* LIGHT MODE COLORS */
   --color-primary: #4ecdc4;
-  --color-secondary: #ff6b35;
+  --color-secondary: #0f766e;
   --color-accent: #44a08d;
 
   /* LIGHT MODE BACKGROUNDS */
@@ -45,7 +45,7 @@
   :root {
     /* DARK MODE COLORS */
     --color-primary: #4ecdc4;
-    --color-secondary: #ff6b35;
+    --color-secondary: #0f766e;
     --color-accent: #44a08d;
 
     /* DARK MODE BACKGROUNDS */
@@ -85,7 +85,7 @@
 .dark {
   /* DARK MODE COLORS */
   --color-primary: #4ecdc4;
-  --color-secondary: #ff6b35;
+  --color-secondary: #0f766e;
   --color-accent: #44a08d;
 
   /* DARK MODE BACKGROUNDS */
@@ -125,7 +125,7 @@
 .light {
   /* LIGHT MODE COLORS */
   --color-primary: #4ecdc4;
-  --color-secondary: #ff6b35;
+  --color-secondary: #0f766e;
   --color-accent: #44a08d;
 
   /* LIGHT MODE BACKGROUNDS */

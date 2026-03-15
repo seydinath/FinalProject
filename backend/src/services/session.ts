@@ -10,6 +10,8 @@ export interface SessionData {
 }
 
 export class SessionService {
+  private static readonly isDev = process.env.NODE_ENV !== 'production'
+
   /**
    * Create a new session
    */
@@ -20,7 +22,9 @@ export class SessionService {
 
       const key = `session:${sessionId}`
       await redis.setEx(key, SESSION_TTL, JSON.stringify(data))
-      console.log(`Session created: ${sessionId}`)
+      if (this.isDev) {
+        console.log(`Session created: ${sessionId}`)
+      }
     } catch (error) {
       console.error('Session creation error:', error)
     }
@@ -60,7 +64,9 @@ export class SessionService {
 
       const key = `session:${sessionId}`
       await redis.del(key)
-      console.log(`Session deleted: ${sessionId}`)
+      if (this.isDev) {
+        console.log(`Session deleted: ${sessionId}`)
+      }
     } catch (error) {
       console.error('Session deletion error:', error)
     }

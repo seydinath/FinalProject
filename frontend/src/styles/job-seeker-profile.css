@@ -39,14 +39,14 @@
 }
 
 .job-seeker-profile-page.light .profile-header-section h1 {
-  -webkit-text-fill-color: #ff6b35;
+  -webkit-text-fill-color: #0f766e;
   background: none;
 }
 
 .btn-edit {
-  background: rgba(102, 126, 234, 0.2);
-  border: 2px solid rgba(102, 126, 234, 0.3);
-  color: var(--accent-2);
+  background: rgba(14, 165, 233, 0.16);
+  border: 2px solid rgba(14, 165, 233, 0.28);
+  color: #0e7490;
   padding: 0.8rem 1.5rem;
   border-radius: 0.8rem;
   cursor: pointer;
@@ -56,15 +56,15 @@
 }
 
 .btn-edit:hover {
-  background: rgba(102, 126, 234, 0.3);
+  background: rgba(14, 165, 233, 0.24);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
 }
 
 .btn-edit.editing {
-  background: rgba(255, 107, 53, 0.2);
-  border-color: rgba(255, 107, 53, 0.3);
-  color: var(--accent-1);
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.32);
+  color: #b45309;
 }
 
 .profile-card {
@@ -122,7 +122,7 @@
 }
 
 .job-seeker-profile-page.light .info-display h2 {
-  -webkit-text-fill-color: #ff6b35;
+  -webkit-text-fill-color: #0f766e;
   background: none;
 }
 
@@ -134,11 +134,11 @@
 }
 
 .job-seeker-profile-page.light .info-display .title {
-  color: #ff6b35;
+  color: #0f766e;
 }
 
 .job-seeker-profile-page.light .info-display {
-  color: #1a1a1a;
+  color: #0f172a;
 }
 
 .profile-section {
@@ -154,7 +154,7 @@
 }
 
 .job-seeker-profile-page.light .profile-section {
-  color: #1a1a1a;
+  color: #0f172a;
   border-bottom-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -166,7 +166,7 @@
 }
 
 .job-seeker-profile-page.light .profile-section h3 {
-  color: #ff6b35;
+  color: #0f766e;
 }
 
 .form-grid {
@@ -200,7 +200,7 @@
 }
 
 .job-seeker-profile-page.light .form-group label {
-  color: #1a1a1a;
+  color: #0f172a;
   opacity: 1;
 }
 
@@ -217,13 +217,13 @@
 .job-seeker-profile-page.dark .input-field,
 .job-seeker-profile-page.dark .textarea-field {
   background: rgba(50, 50, 80, 0.4);
-  color: #fff;
+  color: #e2e8f0;
 }
 
 .job-seeker-profile-page.light .input-field,
 .job-seeker-profile-page.light .textarea-field {
   background: rgba(255, 255, 255, 0.5);
-  color: #000;
+  color: #0f172a;
 }
 
 .input-field:focus,
@@ -249,7 +249,7 @@
   gap: 1rem;
   padding: 1rem;
   border-radius: 0.8rem;
-  background: rgba(102, 126, 234, 0.05);
+  background: rgba(14, 165, 233, 0.08);
 }
 
 .info-item .icon {
@@ -268,7 +268,7 @@
 }
 
 .job-seeker-profile-page.light .info-item .label {
-  color: #555555;
+  color: #475569;
   opacity: 1;
 }
 
@@ -282,12 +282,12 @@
 }
 
 .job-seeker-profile-page.light .info-item .value {
-  color: #1a1a1a;
+  color: #0f172a;
 }
 
 .exp-display {
   padding: 1.5rem;
-  background: rgba(102, 126, 234, 0.05);
+  background: rgba(14, 165, 233, 0.08);
   border-radius: 0.8rem;
 }
 
@@ -301,7 +301,7 @@
 }
 
 .job-seeker-profile-page.light .exp-display p {
-  color: #1a1a1a;
+  color: #0f172a;
 }
 
 /* Skills */
@@ -321,8 +321,8 @@
 }
 
 .skill-tag-edit {
-  background: rgba(102, 126, 234, 0.2);
-  color: var(--accent-2);
+  background: rgba(14, 165, 233, 0.16);
+  color: #0e7490;
   padding: 0.6rem 1rem;
   border-radius: 0.6rem;
   font-weight: 500;
@@ -335,7 +335,7 @@
 .remove-skill {
   background: none;
   border: none;
-  color: var(--accent-2);
+  color: #0e7490;
   cursor: pointer;
   font-size: 1.2rem;
   padding: 0;
@@ -360,17 +360,17 @@
 .upload-button {
   display: block;
   padding: 2rem;
-  border: 2px dashed rgba(102, 126, 234, 0.3);
+  border: 2px dashed rgba(14, 165, 233, 0.32);
   border-radius: 0.8rem;
   text-align: center;
-  background: rgba(102, 126, 234, 0.05);
+  background: rgba(14, 165, 233, 0.08);
   transition: all 0.3s ease;
   font-weight: 600;
 }
 
 .cv-upload-label:hover .upload-button {
   border-color: var(--primary-light);
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(14, 165, 233, 0.16);
 }
 
 .upload-hint {
@@ -385,13 +385,13 @@
 }
 
 .job-seeker-profile-page.light .upload-hint {
-  color: #555555;
+  color: #475569;
   opacity: 1;
 }
 
 .cv-display {
   padding: 1.5rem;
-  background: rgba(102, 126, 234, 0.05);
+  background: rgba(14, 165, 233, 0.08);
   border-radius: 0.8rem;
 }
 
@@ -407,7 +407,7 @@
 }
 
 .job-seeker-profile-page.light .cv-info {
-  color: #1a1a1a;
+  color: #0f172a;
 }
 
 .no-cv {
@@ -421,7 +421,7 @@
 }
 
 .job-seeker-profile-page.light .no-cv {
-  color: #555555;
+  color: #475569;
   opacity: 1;
 }
 
@@ -472,13 +472,13 @@
 }
 
 .btn-cancel {
-  background: rgba(255, 107, 53, 0.2);
-  color: var(--accent-1);
-  border: 2px solid rgba(255, 107, 53, 0.3);
+  background: rgba(245, 158, 11, 0.2);
+  color: #b45309;
+  border: 2px solid rgba(245, 158, 11, 0.32);
 }
 
 .btn-cancel:hover {
-  background: rgba(255, 107, 53, 0.3);
+  background: rgba(245, 158, 11, 0.3);
   transform: translateY(-2px);
 }
 

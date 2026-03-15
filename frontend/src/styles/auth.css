@@ -299,7 +299,7 @@
   cursor: pointer;
   color: #f8f9ff;
   background:
-    linear-gradient(115deg, #0ea5e9 0%, #2563eb 28%, #7c3aed 62%, #ec4899 100%),
+    linear-gradient(115deg, #0ea5e9 0%, #2563eb 28%, #14b8a6 62%, #0f766e 100%),
     radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0) 48%);
   background-size: 160% 160%, 100% 100%;
   box-shadow: 0 14px 30px rgba(73, 55, 185, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.25);

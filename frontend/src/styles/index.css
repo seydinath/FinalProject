@@ -1,6 +1,6 @@
 :root {
   --primary-light: #4ecdc4;
-  --primary-dark: #ff6b35;
+  --primary-dark: #0f766e;
   --accent: #f7b801;
   --accent-2: #667eea;
   
@@ -140,7 +140,7 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 12px 30px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 12px 30px rgba(15, 118, 110, 0.35);
 }
 
 .btn-primary:active {

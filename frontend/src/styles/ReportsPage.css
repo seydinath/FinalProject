@@ -440,7 +440,7 @@
 .metric-val {
   font-size: 1.1rem;
   font-weight: 800;
-  color: #a78bfa;
+  color: #67e8f9;
   margin: 0;
 }
 
@@ -477,14 +477,14 @@
 }
 
 .action-email {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #0ea5e9 0%, #14b8a6 100%);
   color: white;
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 15px rgba(20, 184, 166, 0.22);
 }
 
 .action-email:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 25px rgba(20, 184, 166, 0.38);
 }
 
 .action-delete {

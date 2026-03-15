@@ -55,15 +55,7 @@
 }
 
 .topnav.light .logo-btn {
-  color: #000;
-}
-
-.topnav.dark .logo-btn {
-  color: #fff;
-}
-
-.topnav.light .logo-btn {
-  color: #000;
+  color: #0f172a;
 }
 
 .logo-btn:hover {
@@ -75,7 +67,7 @@
 }
 
 .logo-text {
-  background: linear-gradient(135deg, #4ecdc4, #ff6b35);
+  background: linear-gradient(135deg, #4ecdc4, #0f766e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -83,7 +75,7 @@
 }
 
 .topnav.light .logo-text {
-  -webkit-text-fill-color: #ff6b35;
+  -webkit-text-fill-color: #0f766e;
   background: none;
 }
 
@@ -113,7 +105,7 @@
 }
 
 .topnav.light .breadcrumb-separator {
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(15, 23, 42, 0.4);
 }
 
 .breadcrumb-link {
@@ -134,7 +126,7 @@
 }
 
 .topnav.light .breadcrumb-link {
-  color: #333;
+  color: #1f2937;
 }
 
 .breadcrumb-link:hover {
@@ -152,7 +144,7 @@
 }
 
 .topnav.light .breadcrumb-link.active {
-  color: #ff6b35;
+  color: #0f766e;
   font-weight: 600;
 }
 
@@ -190,7 +182,7 @@
 }
 
 .topnav.light .nav-item {
-  color: #000;
+  color: #0f172a;
 }
 
 .nav-item:hover {
@@ -199,12 +191,12 @@
 }
 
 .logout-btn {
-  color: #ff6b35;
+  color: #0f766e;
 }
 
 .logout-btn:hover {
-  background: rgba(255, 107, 53, 0.1);
-  color: #ff6b35;
+  background: rgba(15, 118, 110, 0.12);
+  color: #0f766e;
 }
 
 .login-btn {
@@ -264,7 +256,7 @@
 }
 
 .topnav.light .lang-option {
-  color: #333;
+  color: #1f2937;
 }
 
 .lang-option:hover {

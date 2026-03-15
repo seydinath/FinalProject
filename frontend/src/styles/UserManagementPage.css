@@ -404,6 +404,34 @@
   gap: 0.8rem;
 }
 
+.support-sidebar-controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+}
+
+.support-sidebar-controls input,
+.support-sidebar-controls select {
+  width: 100%;
+  border-radius: 11px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.75);
+  color: #dce7f5;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.86rem;
+}
+
+.support-sidebar-controls input::placeholder {
+  color: #9fb0c8;
+}
+
+.support-sidebar-controls input:focus,
+.support-sidebar-controls select:focus {
+  outline: none;
+  border-color: rgba(45, 212, 191, 0.4);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
+}
+
 .support-conversation-item {
   width: 100%;
   text-align: left;
@@ -463,6 +491,7 @@
   margin: 0.45rem 0;
   color: #d6e0ef;
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -491,6 +520,12 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.support-thread-audit {
+  margin: 0.35rem 0 0;
+  color: #9fb0c8;
+  font-size: 0.84rem;
 }
 
 .support-thread-admin-actions {

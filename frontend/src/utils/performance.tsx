@@ -27,6 +27,7 @@ interface PerformanceMetrics {
 class PerformanceMonitor {
   private metrics: PerformanceMetrics[] = []
   private marks: Map<string, number> = new Map()
+  private readonly isDev = typeof window !== 'undefined' && /localhost|127\.0\.0\.1/.test(window.location.hostname)
 
   /**
    * Start measuring a component or operation
@@ -175,6 +176,8 @@ class PerformanceMonitor {
    * Log performance report
    */
   logReport(): void {
+    if (!this.isDev) return
+
     console.group('📊 Performance Report')
     
     console.group('Core Web Vitals')
@@ -236,13 +239,14 @@ export function useRenderTime(componentName: string): void {
  */
 export function useRenderCount(componentName: string): number {
   const renderCount = React.useRef(0)
+  const isDev = typeof window !== 'undefined' && /localhost|127\.0\.0\.1/.test(window.location.hostname)
 
   React.useEffect(() => {
     renderCount.current++
-    if (renderCount.current > 1) {
+    if (isDev && renderCount.current > 1) {
       console.log(`🔄 ${componentName} re-rendered (count: ${renderCount.current})`)
     }
-  })
+  }, [componentName, isDev])
 
   return renderCount.current
 }
