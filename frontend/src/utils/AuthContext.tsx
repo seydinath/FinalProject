@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { loginUser, registerUser, logoutUser, storeUser } from '../services/authService'
+import { loginUser, registerUser, googleLoginUser, logoutUser, storeUser } from '../services/authService'
 
 interface AuthContextType {
   isLoggedIn: boolean
@@ -8,6 +8,13 @@ interface AuthContextType {
   isAdmin: boolean
   isLoading: boolean
   login: (email: string, password: string, userType?: 'job_seeker' | 'recruiter') => Promise<boolean>
+  loginWithGoogle: (profile: {
+    googleId: string
+    email: string
+    name: string
+    avatar?: string
+    userType?: 'job_seeker' | 'recruiter'
+  }) => Promise<boolean>
   register: (name: string, email: string, password: string, userType: 'job_seeker' | 'recruiter') => Promise<boolean>
   logout: () => void
 }
@@ -105,6 +112,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  const loginWithGoogle = async (profile: {
+    googleId: string
+    email: string
+    name: string
+    avatar?: string
+    userType?: 'job_seeker' | 'recruiter'
+  }): Promise<boolean> => {
+    setIsLoading(true)
+
+    try {
+      const result = await googleLoginUser(profile)
+
+      if (result) {
+        const resolvedType = result.user.userType
+        const resolvedAdmin = resolvedType === 'admin' || !!result.user.isAdmin
+
+        setIsLoggedIn(true)
+        setUserEmail(result.user.email)
+        setUserType(resolvedType)
+        setIsAdmin(resolvedAdmin)
+
+        localStorage.setItem('isLoggedIn', 'true')
+        localStorage.setItem('userEmail', result.user.email)
+        localStorage.setItem('userType', resolvedType)
+        localStorage.setItem('isAdmin', resolvedAdmin ? 'true' : 'false')
+        storeUser(result.user)
+
+        return true
+      }
+
+      return false
+    } catch (error) {
+      console.error('Google login error:', error)
+      return false
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const logout = () => {
     setIsLoading(true)
     
@@ -130,7 +176,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userType, userEmail, isAdmin, isLoading, login, register, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, userType, userEmail, isAdmin, isLoading, login, loginWithGoogle, register, logout }}>
       {children}
     </AuthContext.Provider>
   )

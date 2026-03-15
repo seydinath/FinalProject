@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLanguage } from '../utils/LanguageContext'
 import { useTheme } from '../utils/ThemeContext'
 import { useAuth } from '../utils/AuthContext'
@@ -17,7 +17,7 @@ interface AuthPageProps {
 export function AuthPage({ onAuthSuccess }: AuthPageProps) {
   const { t, language } = useLanguage()
   const { isDark } = useTheme()
-  const { login, register, isLoading } = useAuth()
+  const { login, loginWithGoogle, register, isLoading } = useAuth()
   const { success, error: showError } = useToast()
   const [isLogin, setIsLogin] = useState(true)
   const [userType, setUserType] = useState<'job_seeker' | 'recruiter'>('job_seeker')
@@ -26,6 +26,27 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
   const [charIsShaking, setCharIsShaking] = useState(false)
   const [charIsSad, setCharIsSad] = useState(false)
   const [charIsHappy, setCharIsHappy] = useState(false)
+  const [googleReady, setGoogleReady] = useState(false)
+
+  useEffect(() => {
+    const existing = document.getElementById('google-gsi-sdk') as HTMLScriptElement | null
+    if (existing) {
+      setGoogleReady(true)
+      return
+    }
+
+    const script = document.createElement('script')
+    script.id = 'google-gsi-sdk'
+    script.src = 'https://accounts.google.com/gsi/client'
+    script.async = true
+    script.defer = true
+    script.onload = () => setGoogleReady(true)
+    script.onerror = () => {
+      setGoogleReady(false)
+      showError(language === 'fr' ? 'Impossible de charger Google OAuth' : 'Failed to load Google OAuth')
+    }
+    document.head.appendChild(script)
+  }, [language, showError])
 
   // Form validation state
   const { 
@@ -108,11 +129,65 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
   }
 
   const handleGoogleAuth = async () => {
-    // Simulate Google OAuth
-    await new Promise(resolve => setTimeout(resolve, 800))
-    await login('user@google.com', 'google_oauth_token', userType)
-    if (onAuthSuccess) {
-      onAuthSuccess()
+    const googleClientId = (import.meta as any).env.VITE_GOOGLE_CLIENT_ID
+
+    if (!googleClientId) {
+      showError(language === 'fr' ? 'VITE_GOOGLE_CLIENT_ID manquant' : 'Missing VITE_GOOGLE_CLIENT_ID')
+      return
+    }
+
+    if (!googleReady || !(window as any).google?.accounts?.id) {
+      showError(language === 'fr' ? 'Google OAuth non prêt' : 'Google OAuth not ready')
+      return
+    }
+
+    try {
+      const credentialToken = await new Promise<string>((resolve, reject) => {
+        ;(window as any).google.accounts.id.initialize({
+          client_id: googleClientId,
+          callback: (response: any) => {
+            if (response?.credential) {
+              resolve(response.credential)
+            } else {
+              reject(new Error('No Google credential'))
+            }
+          },
+          auto_select: false,
+          ux_mode: 'popup',
+        })
+
+        ;(window as any).google.accounts.id.prompt((notification: any) => {
+          if (notification?.isNotDisplayed?.() || notification?.isSkippedMoment?.()) {
+            reject(new Error('Google prompt unavailable'))
+          }
+        })
+      })
+
+      const tokenPayload = JSON.parse(atob(credentialToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')))
+
+      const ok = await loginWithGoogle({
+        googleId: tokenPayload.sub,
+        email: tokenPayload.email,
+        name: tokenPayload.name,
+        avatar: tokenPayload.picture,
+        userType,
+      })
+
+      if (!ok) {
+        showError(language === 'fr' ? 'Connexion Google échouée' : 'Google sign-in failed')
+        return
+      }
+
+      success(language === 'fr' ? 'Connexion Google réussie' : 'Google sign-in successful')
+      setCharIsHappy(true)
+      setTimeout(() => setCharIsHappy(false), 2000)
+
+      if (onAuthSuccess) {
+        onAuthSuccess()
+      }
+    } catch (error) {
+      console.error('Google auth error:', error)
+      showError(language === 'fr' ? 'Erreur Google OAuth' : 'Google OAuth error')
     }
   }
 
@@ -309,7 +384,7 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
             type="button" 
             className="btn-google"
             onClick={handleGoogleAuth}
-            disabled={isSubmitting}
+            disabled={isSubmitting || isLoading || !googleReady}
           >
             <span className="google-icon">🔵</span>
             {language === 'fr' ? 'Continuer avec Google' : 'Continue with Google'}

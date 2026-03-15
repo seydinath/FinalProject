@@ -15,6 +15,14 @@ export interface RegisterCredentials extends LoginCredentials {
   userType: 'job_seeker' | 'recruiter'
 }
 
+export interface GoogleLoginPayload {
+  googleId: string
+  email: string
+  name: string
+  avatar?: string
+  userType?: 'job_seeker' | 'recruiter'
+}
+
 export interface UserProfile {
   headline?: string
   bio?: string
@@ -95,6 +103,24 @@ export async function registerUser(credentials: RegisterCredentials): Promise<Au
 }
 
 /**
+ * Connexion Google OAuth
+ */
+export async function googleLoginUser(payload: GoogleLoginPayload): Promise<AuthResponse | null> {
+  const response = await apiRequest<AuthResponse>('/auth/google-login', {
+    method: 'POST',
+    body: payload
+  })
+
+  if (response.success && response.data) {
+    setAuthToken(response.data.token)
+    return response.data
+  }
+
+  console.error('Google login error:', response.error)
+  return null
+}
+
+/**
  * Déconnexion utilisateur
  */
 export function logoutUser(): void {
@@ -154,6 +180,7 @@ export async function uploadCv(file: File): Promise<{ cvUrl: string; user: MeRes
 export default {
   loginUser,
   registerUser,
+  googleLoginUser,
   logoutUser,
   getStoredUser,
   storeUser,
