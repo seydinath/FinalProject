@@ -1,95 +1,95 @@
 ﻿# JobConnect
 
-Plateforme de mise en relation entre recruteurs et chercheurs d'emploi, pensÃ©e pour des besoins concrets et rapides: missions ponctuelles, recrutements ciblÃ©s, suivi de candidatures, gestion administrative et support temps rÃ©el.
+Plateforme de mise en relation entre recruteurs et chercheurs d'emploi, pensée pour des besoins concrets et rapides: missions ponctuelles, recrutements ciblés, suivi de candidatures, gestion administrative et support temps réel.
 
 ## Vue d'ensemble
 
-JobConnect permet a un recruteur de publier une offre, de recevoir des candidatures, de suivre les profils et de piloter ses recrutements depuis une interface dÃ©diÃ©e. CÃ´tÃ© candidat, la plateforme permet de consulter les offres, postuler, suivre l'Ã©tat des candidatures et Ã©changer avec l'administration si besoin.
+JobConnect permet à un recruteur de publier une offre, de recevoir des candidatures, de suivre les profils et de piloter ses recrutements depuis une interface dédiée. Côté candidat, la plateforme permet de consulter les offres, postuler, suivre l'état des candidatures et échanger avec l'administration si besoin.
 
-Le projet est organisÃ© en monorepo avec:
+Le projet est organisé en monorepo avec:
 - un frontend React + TypeScript + Vite
 - un backend Node.js + Express + TypeScript
 - MongoDB pour la persistance principale
-- Redis pour le cache et certaines fonctionnalitÃ©s temps rÃ©el/session quand disponible
-- Socket.IO pour les mises a jour en direct
+- Redis pour le cache et certaines fonctionnalités temps réel/session quand disponible
+- Socket.IO pour les mises à jour en direct
 
-## FonctionnalitÃ©s actuelles
+## Fonctionnalités actuelles
 
 ### Recruteurs
-- crÃ©ation et gestion d'offres d'emploi
-- consultation des candidatures reÃ§ues
+- création et gestion d'offres d'emploi
+- consultation des candidatures reçues
 - suivi des statuts candidat
 - interface de gestion des profils et des flux de recrutement
 
 ### Chercheurs d'emploi
 - consultation des offres disponibles
-- dÃ©pÃ´t de candidature
+- dépôt de candidature
 - suivi des candidatures et des statuts
 - gestion du profil et du CV
-- rÃ©ception des notifications produit
+- réception des notifications produit
 
 ### Administration
 - gestion des utilisateurs
-- modÃ©ration de contenus
+- modération de contenus
 - revue des demandes de publication d'offres
-- suivi des notifications et de l'activitÃ© support
+- suivi des notifications et de l'activité support
 
-### Support intÃ©grÃ©
+### Support intégré
 - fil de discussion support utilisateur <-> administration
-- rÃ©sumÃ© admin des conversations ouvertes et non lues
+- résumé admin des conversations ouvertes et non lues
 - statut de conversation `open` / `resolved`
 - marquage lu utilisateur/admin
-- diffusion temps rÃ©el des nouveaux messages et des changements de statut
+- diffusion temps réel des nouveaux messages et des changements de statut
 
-### ExpÃ©rience produit
+### Expérience produit
 - interface responsive desktop/mobile
-- thÃ¨me clair/sombre harmonisÃ©
-- composants UI premium et animations maÃ®trisÃ©es
+- thème clair/sombre harmonisé
+- composants UI premium et animations maîtrisées
 - landing page enrichie avec effets visuels Three.js
 
 ## Stack technique
 
 - Frontend: React 18, TypeScript, Vite, Redux Toolkit, Socket.IO Client, Three.js
 - Backend: Node.js, Express, TypeScript, Mongoose, JWT, Socket.IO
-- DonnÃ©es: MongoDB, Redis
-- Authentification: JWT, Google OAuth cÃ´tÃ© backend selon configuration
+- Données: MongoDB, Redis
+- Authentification: JWT, Google OAuth côté backend selon configuration
 - Styling: CSS modulaire par page + styles globaux
 
-## Structure du dÃ©pÃ´t
+## Structure du dépôt
 
 ```text
 FinalProject/
-â”œâ”€â”€ frontend/
-â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ components/
-â”‚   â”‚   â”œâ”€â”€ pages/
-â”‚   â”‚   â”œâ”€â”€ services/
-â”‚   â”‚   â”œâ”€â”€ store/
-â”‚   â”‚   â”œâ”€â”€ styles/
-â”‚   â”‚   â””â”€â”€ utils/
-â”‚   â””â”€â”€ package.json
-â”œâ”€â”€ backend/
-â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ config/
-â”‚   â”‚   â”œâ”€â”€ controllers/
-â”‚   â”‚   â”œâ”€â”€ middleware/
-â”‚   â”‚   â”œâ”€â”€ models/
-â”‚   â”‚   â”œâ”€â”€ routes/
-â”‚   â”‚   â””â”€â”€ services/
-â”‚   â””â”€â”€ package.json
-â”œâ”€â”€ docs/
-â”œâ”€â”€ docker-compose.yml
-â””â”€â”€ package.json
+|-- frontend/
+|   |-- src/
+|   |   |-- components/
+|   |   |-- pages/
+|   |   |-- services/
+|   |   |-- store/
+|   |   |-- styles/
+|   |   `-- utils/
+|   `-- package.json
+|-- backend/
+|   |-- src/
+|   |   |-- config/
+|   |   |-- controllers/
+|   |   |-- middleware/
+|   |   |-- models/
+|   |   |-- routes/
+|   |   `-- services/
+|   `-- package.json
+|-- docs/
+|-- docker-compose.yml
+`-- package.json
 ```
 
-## DÃ©marrage rapide
+## Démarrage rapide
 
-### PrÃ©requis
+### Prérequis
 
 - Node.js 18+
 - npm 9+
 - MongoDB
-- Redis optionnel mais recommandÃ©
+- Redis optionnel mais recommandé
 
 ### Installation
 
@@ -99,7 +99,7 @@ Depuis la racine du projet:
 npm install
 ```
 
-Puis installer les dÃ©pendances de chaque workspace si nÃ©cessaire:
+Puis installer les dépendances de chaque workspace si nécessaire:
 
 ```bash
 cd frontend
@@ -109,7 +109,7 @@ cd ../backend
 npm install
 ```
 
-### Lancement en dÃ©veloppement
+### Lancement en développement
 
 Depuis la racine:
 
@@ -117,7 +117,7 @@ Depuis la racine:
 npm run dev
 ```
 
-Ou sÃ©parÃ©ment:
+Ou séparément:
 
 ```bash
 cd backend
@@ -127,7 +127,7 @@ cd ../frontend
 npm run dev
 ```
 
-AccÃ¨s par dÃ©faut:
+Accès par défaut:
 - frontend: `http://localhost:5173`
 - backend: `http://localhost:5000`
 
@@ -160,16 +160,16 @@ npm run lint
 npm run preview
 ```
 
-## Ã‰tat de validation
+## État de validation
 
-ContrÃ´les vÃ©rifiÃ©s sur l'Ã©tat actuel du projet:
+Contrôles vérifiés sur l'état actuel du projet:
 - lint frontend: OK
 - lint backend: OK
 - build frontend: OK
 - build backend: OK
 - smoke test backend: OK
 
-## Modules clÃ©s
+## Modules clés
 
 ### Backend
 
@@ -192,28 +192,28 @@ ContrÃ´les vÃ©rifiÃ©s sur l'Ã©tat actuel du projet:
 ### Utilisateur
 1. ouvre son espace notifications
 2. consulte l'historique ou envoie un message support
-3. reÃ§oit les rÃ©ponses de l'administration en temps rÃ©el
+3. reçoit les réponses de l'administration en temps réel
 4. voit le statut de la conversation
 
 ### Administration
-1. consulte le rÃ©sumÃ© des conversations dans la navigation / gestion utilisateurs
-2. filtre les discussions ouvertes, rÃ©solues ou non lues
-3. rÃ©pond au fil support
-4. marque la conversation comme rÃ©solue ou la rouvre
+1. consulte le résumé des conversations dans la navigation / gestion utilisateurs
+2. filtre les discussions ouvertes, résolues ou non lues
+3. répond au fil support
+4. marque la conversation comme résolue ou la rouvre
 
-## Documentation associÃ©e
+## Documentation associée
 
 Voir les autres fichiers du dossier `docs/`:
-- [SETUP.md](SETUP.md): installation dÃ©taillÃ©e
+- [SETUP.md](SETUP.md): installation détaillée
 - [API.md](API.md): documentation des endpoints
-- [DATABASE.md](DATABASE.md): structure des donnÃ©es
-- [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md): guide d'intÃ©gration
-- [JOB_OFFERS_WORKFLOW.md](JOB_OFFERS_WORKFLOW.md): workflow mÃ©tier des offres
-- [TESTING.md](TESTING.md): stratÃ©gie et commandes de test
+- [DATABASE.md](DATABASE.md): structure des données
+- [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md): guide d'intégration
+- [JOB_OFFERS_WORKFLOW.md](JOB_OFFERS_WORKFLOW.md): workflow métier des offres
+- [TESTING.md](TESTING.md): stratégie et commandes de test
 
 ## Statut
 
 - Version documentaire: mars 2026
-- Statut projet: base fonctionnelle active, buildÃ©e et validÃ©e
-- DerniÃ¨re mise a jour README: alignÃ©e avec l'Ã©tat rÃ©el du code et des commandes disponibles
+- Statut projet: base fonctionnelle active, buildée et validée
+- Dernière mise à jour README: alignée avec l'état réel du code et des commandes disponibles
 
