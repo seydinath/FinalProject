@@ -1,4 +1,4 @@
-# Contributing
+﻿# Contributing
 
 ## Code Style
 
@@ -29,4 +29,5 @@ docs: Updated API documentation
 
 ---
 
-**Merci de contribuer à JobConnect !**
+**Merci de contribuer Ã  JobConnect !**
+

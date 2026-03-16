@@ -1,61 +1,61 @@
-# JobConnect - Architecture & Installation
+﻿# JobConnect - Architecture & Installation
 
-## 🏗️ Project Structure
+## ðŸ—ï¸ Project Structure
 
 ```
 JobConnect/
-├── frontend/                    # React + TypeScript Frontend
-│   ├── src/
-│   │   ├── components/         # Reusable components
-│   │   │   ├── Header.tsx
-│   │   │   ├── HeroSection.tsx
-│   │   │   ├── FeaturesSection.tsx
-│   │   │   └── LiquidMetalBackground.tsx
-│   │   ├── pages/             # Page components
-│   │   │   └── LandingPage.tsx
-│   │   ├── utils/             # Utility functions
-│   │   │   └── ThemeContext.tsx
-│   │   ├── styles/            # Global styles
-│   │   │   └── index.css
-│   │   ├── App.tsx
-│   │   └── main.tsx
-│   ├── public/                # Static assets
-│   ├── index.html
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── vite.config.ts
-│   └── .env.example
-│
-├── backend/                    # Node.js/Express Backend
-│   ├── src/
-│   │   ├── routes/            # API routes
-│   │   │   ├── auth.ts
-│   │   │   └── jobOffers.ts
-│   │   ├── controllers/       # Controllers (future)
-│   │   ├── models/            # MongoDB models
-│   │   │   ├── User.ts
-│   │   │   ├── JobOffer.ts
-│   │   │   └── Application.ts
-│   │   ├── middleware/        # Custom middleware
-│   │   │   └── auth.ts
-│   │   ├── config/           # Configuration
-│   │   │   ├── env.ts
-│   │   │   └── database.ts
-│   │   └── server.ts         # Main server file
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── .env.example
-│
-├── docs/                      # Documentation
-│   ├── API.md
-│   ├── DATABASE.md
-│   └── SETUP.md
-│
-└── docs/
-   └── README.md
+â”œâ”€â”€ frontend/                    # React + TypeScript Frontend
+â”‚   â”œâ”€â”€ src/
+â”‚   â”‚   â”œâ”€â”€ components/         # Reusable components
+â”‚   â”‚   â”‚   â”œâ”€â”€ Header.tsx
+â”‚   â”‚   â”‚   â”œâ”€â”€ HeroSection.tsx
+â”‚   â”‚   â”‚   â”œâ”€â”€ FeaturesSection.tsx
+â”‚   â”‚   â”‚   â””â”€â”€ LiquidMetalBackground.tsx
+â”‚   â”‚   â”œâ”€â”€ pages/             # Page components
+â”‚   â”‚   â”‚   â””â”€â”€ LandingPage.tsx
+â”‚   â”‚   â”œâ”€â”€ utils/             # Utility functions
+â”‚   â”‚   â”‚   â””â”€â”€ ThemeContext.tsx
+â”‚   â”‚   â”œâ”€â”€ styles/            # Global styles
+â”‚   â”‚   â”‚   â””â”€â”€ index.css
+â”‚   â”‚   â”œâ”€â”€ App.tsx
+â”‚   â”‚   â””â”€â”€ main.tsx
+â”‚   â”œâ”€â”€ public/                # Static assets
+â”‚   â”œâ”€â”€ index.html
+â”‚   â”œâ”€â”€ package.json
+â”‚   â”œâ”€â”€ tsconfig.json
+â”‚   â”œâ”€â”€ vite.config.ts
+â”‚   â””â”€â”€ .env.example
+â”‚
+â”œâ”€â”€ backend/                    # Node.js/Express Backend
+â”‚   â”œâ”€â”€ src/
+â”‚   â”‚   â”œâ”€â”€ routes/            # API routes
+â”‚   â”‚   â”‚   â”œâ”€â”€ auth.ts
+â”‚   â”‚   â”‚   â””â”€â”€ jobOffers.ts
+â”‚   â”‚   â”œâ”€â”€ controllers/       # Controllers (future)
+â”‚   â”‚   â”œâ”€â”€ models/            # MongoDB models
+â”‚   â”‚   â”‚   â”œâ”€â”€ User.ts
+â”‚   â”‚   â”‚   â”œâ”€â”€ JobOffer.ts
+â”‚   â”‚   â”‚   â””â”€â”€ Application.ts
+â”‚   â”‚   â”œâ”€â”€ middleware/        # Custom middleware
+â”‚   â”‚   â”‚   â””â”€â”€ auth.ts
+â”‚   â”‚   â”œâ”€â”€ config/           # Configuration
+â”‚   â”‚   â”‚   â”œâ”€â”€ env.ts
+â”‚   â”‚   â”‚   â””â”€â”€ database.ts
+â”‚   â”‚   â””â”€â”€ server.ts         # Main server file
+â”‚   â”œâ”€â”€ package.json
+â”‚   â”œâ”€â”€ tsconfig.json
+â”‚   â””â”€â”€ .env.example
+â”‚
+â”œâ”€â”€ docs/                      # Documentation
+â”‚   â”œâ”€â”€ API.md
+â”‚   â”œâ”€â”€ DATABASE.md
+â”‚   â””â”€â”€ SETUP.md
+â”‚
+â””â”€â”€ docs/
+   â””â”€â”€ README.md
 ```
 
-## 🚀 Quick Start
+## ðŸš€ Quick Start
 
 ### Prerequisites
 - Node.js 18+
@@ -124,7 +124,7 @@ JobConnect/
 
 The frontend will be available at `http://localhost:5173`
 
-## 🎨 Features Implemented
+## ðŸŽ¨ Features Implemented
 
 ### Frontend
 - **Premium Landing Page** with modern design
@@ -140,7 +140,7 @@ The frontend will be available at `http://localhost:5173`
 - **CORS** enabled
 - **Error Handling** with proper status codes
 
-## 🔗 API Endpoints
+## ðŸ”— API Endpoints
 
 ### Authentication
 - `POST /auth/google-login` - Login with Google OAuth
@@ -155,7 +155,7 @@ The frontend will be available at `http://localhost:5173`
 - `GET /job-offers/:id/applications` - Get applications (auth required)
 - `PATCH /job-offers/:jobOfferId/applications/:appId` - Update application status (auth required)
 
-## 📊 Database Schema
+## ðŸ“Š Database Schema
 
 ### User
 ```json
@@ -214,7 +214,7 @@ The frontend will be available at `http://localhost:5173`
 }
 ```
 
-## 🛠️ Build & Deployment
+## ðŸ› ï¸ Build & Deployment
 
 ### Frontend Build
 ```bash
@@ -230,7 +230,7 @@ npm run build
 ```
 Output will be in `backend/dist/`
 
-## 🔒 Security Features
+## ðŸ”’ Security Features
 
 - JWT token-based authentication
 - Google OAuth 2.0 integration
@@ -239,7 +239,7 @@ Output will be in `backend/dist/`
 - Input validation
 - MongoDB injection prevention
 
-## 📝 Next Steps
+## ðŸ“ Next Steps
 
 1. Implement Google OAuth configuration
 2. Set up MongoDB Atlas (or local MongoDB)
@@ -252,3 +252,4 @@ Output will be in `backend/dist/`
 ---
 
 **Last Updated:** March 2026
+

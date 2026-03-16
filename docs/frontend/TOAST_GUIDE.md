@@ -1,8 +1,8 @@
-# 🔔 Toast Notifications System
+﻿# ðŸ”” Toast Notifications System
 
-## 🎯 Installation & Setup
+## ðŸŽ¯ Installation & Setup
 
-Le système de notifications est déjà intégré dans App.tsx. Voici comment l'utiliser:
+Le systÃ¨me de notifications est dÃ©jÃ  intÃ©grÃ© dans App.tsx. Voici comment l'utiliser:
 
 ### 1. **Import le hook**
 ```tsx
@@ -15,28 +15,28 @@ function MonComposant() {
   const { success, error, info, warning } = useToast()
   
   return (
-    <button onClick={() => success('✅ Succès!')}>
+    <button onClick={() => success('âœ… SuccÃ¨s!')}>
       Tester
     </button>
   )
 }
 ```
 
-## 📚 Utilisation
+## ðŸ“š Utilisation
 
 ### Success
 ```tsx
 const { success } = useToast()
-success('Opération réussie!')
-// Duration: 3000ms (par défaut)
-success('Opération réussie!', 5000) // Duration custom
+success('OpÃ©ration rÃ©ussie!')
+// Duration: 3000ms (par dÃ©faut)
+success('OpÃ©ration rÃ©ussie!', 5000) // Duration custom
 ```
 
 ### Error
 ```tsx
 const { error } = useToast()
 error('Une erreur est survenue!')
-// Duration: 4000ms (par défaut)
+// Duration: 4000ms (par dÃ©faut)
 error('Erreur!', 5000)
 ```
 
@@ -54,14 +54,14 @@ warning('Attention!')
 // Duration: 3500ms
 ```
 
-## 🎨 Types Disponibles
+## ðŸŽ¨ Types Disponibles
 
-- **success** 🟢 - Opération réussie (vert)
-- **error** 🔴 - Erreur ou problème (rouge)
-- **info** 🔵 - Information (bleu)
-- **warning** 🟡 - Attention (orange)
+- **success** ðŸŸ¢ - OpÃ©ration rÃ©ussie (vert)
+- **error** ðŸ”´ - Erreur ou problÃ¨me (rouge)
+- **info** ðŸ”µ - Information (bleu)
+- **warning** ðŸŸ¡ - Attention (orange)
 
-## 📋 Exemples Réels
+## ðŸ“‹ Exemples RÃ©els
 
 ### Lors d'une soumission de formulaire
 ```tsx
@@ -69,7 +69,7 @@ const handleSubmit = async (e) => {
   e.preventDefault()
   try {
     const response = await api.post('/data', formData)
-    success('Données sauvegardées avec succès!')
+    success('DonnÃ©es sauvegardÃ©es avec succÃ¨s!')
   } catch (err) {
     error('Erreur lors de la sauvegarde: ' + err.message)
   }
@@ -81,7 +81,7 @@ const handleSubmit = async (e) => {
 const handleDelete = async (id) => {
   try {
     await api.delete(`/items/${id}`)
-    success('Élément supprimé')
+    success('Ã‰lÃ©ment supprimÃ©')
   } catch (err) {
     error('Impossible de supprimer')
   }
@@ -93,54 +93,55 @@ const handleDelete = async (id) => {
 const handleLogin = async () => {
   try {
     login(email, password)
-    success('Connexion réussie! 🎉')
+    success('Connexion rÃ©ussie! ðŸŽ‰')
   } catch (err) {
     error('Identifiants incorrects')
   }
 }
 ```
 
-## ⚙️ Configuration
+## âš™ï¸ Configuration
 
-### Durées par défaut (ms)
+### DurÃ©es par dÃ©faut (ms)
 - success: 3000
 - error: 4000
 - info: 3000
 - warning: 3500
 
-### Personnaliser la durée
+### Personnaliser la durÃ©e
 ```tsx
 success('Message court', 2000) // 2 secondes
 error('Message long', 6000)    // 6 secondes
-warning('Sans auto-dismiss', 0) // Durée infinie (utilisateur doit fermer)
+warning('Sans auto-dismiss', 0) // DurÃ©e infinie (utilisateur doit fermer)
 ```
 
-## 🎯 Best Practices
+## ðŸŽ¯ Best Practices
 
 1. **Sois concis** - Messages courts et clairs
-2. **Utilise des émojis** - Ajoute du feedback visuel
-3. **Distingue les types** - success/error/info/warning appropriés
-4. **Pas d'abus** - Évite trop de toasts simultanés
+2. **Utilise des Ã©mojis** - Ajoute du feedback visuel
+3. **Distingue les types** - success/error/info/warning appropriÃ©s
+4. **Pas d'abus** - Ã‰vite trop de toasts simultanÃ©s
 5. **User feedback** - Toujours confirmer les actions importantes
 
-## 🧪 Test
+## ðŸ§ª Test
 
-Une page de démonstration est disponible pour tester:
+Une page de dÃ©monstration est disponible pour tester:
 - Voir ToastTestPage.tsx
 - Tous les types de notifications
 - Animations et comportements
 
-## 📱 Responsive
+## ðŸ“± Responsive
 
-- ✅ Mobile responsive
-- ✅ Positionné en bas à droite
-- ✅ Stack automatique
-- ✅ Close button sur desktop (caché sur mobile)
+- âœ… Mobile responsive
+- âœ… PositionnÃ© en bas Ã  droite
+- âœ… Stack automatique
+- âœ… Close button sur desktop (cachÃ© sur mobile)
 
-## 🎨 Styling
+## ðŸŽ¨ Styling
 
 Tous les styles sont dans `src/styles/toast.css`:
-- Animation d'entrée/sortie
+- Animation d'entrÃ©e/sortie
 - Dark/Light mode
 - Progress bar
 - Responsive design
+

@@ -1,67 +1,67 @@
-# 🔗 Guide d'Intégration du Backend - Frontend
+﻿# ðŸ”— Guide d'IntÃ©gration du Backend - Frontend
 
-## 📋 Vue d'ensemble
+## ðŸ“‹ Vue d'ensemble
 
-Votre frontend est maintenant **connecté au backend MongoDB**! Les services API ont été créés pour gérer:
+Votre frontend est maintenant **connectÃ© au backend MongoDB**! Les services API ont Ã©tÃ© crÃ©Ã©s pour gÃ©rer:
 
-✅ **Authentification** (`authService.ts`)
-✅ **Offres d'emploi** (`jobOfferService.ts`)  
-✅ **Requêtes HTTP générales** (`apiClient.ts`)
+âœ… **Authentification** (`authService.ts`)
+âœ… **Offres d'emploi** (`jobOfferService.ts`)  
+âœ… **RequÃªtes HTTP gÃ©nÃ©rales** (`apiClient.ts`)
 
 ---
 
-## 🚀 Démarrage Rapide
+## ðŸš€ DÃ©marrage Rapide
 
-### **1. Démarrer les deux apps**
+### **1. DÃ©marrer les deux apps**
 
 **Terminal 1 - Backend:**
 ```bash
 cd backend
 npm run dev
-# ✅ MongoDB Connected: cluster0.tnbfvmi.mongodb.net
-# 🚀 JobConnect API running on port 5000
+# âœ… MongoDB Connected: cluster0.tnbfvmi.mongodb.net
+# ðŸš€ JobConnect API running on port 5000
 ```
 
 **Terminal 2 - Frontend:**
 ```bash
 cd frontend
 npm run dev
-# ✅ http://localhost:5173
+# âœ… http://localhost:5173
 ```
 
 ---
 
-## 📂 Structure des Services
+## ðŸ“‚ Structure des Services
 
 ```
 frontend/src/services/
-├── apiClient.ts        # Client HTTP de base avec gestion d'erreurs
-├── authService.ts      # Login, Register, Logout
-├── jobOfferService.ts  # CRUD offres d'emploi
-└── index.ts           # Export centralisé
+â”œâ”€â”€ apiClient.ts        # Client HTTP de base avec gestion d'erreurs
+â”œâ”€â”€ authService.ts      # Login, Register, Logout
+â”œâ”€â”€ jobOfferService.ts  # CRUD offres d'emploi
+â””â”€â”€ index.ts           # Export centralisÃ©
 ```
 
 ---
 
-## 💡 Utilisation des Services
+## ðŸ’¡ Utilisation des Services
 
 ### **Authentication Service**
 
 ```typescript
 import { loginUser, registerUser, logoutUser } from '../services'
 
-// ✅ Connexion
+// âœ… Connexion
 const result = await loginUser({
   email: 'user@example.com',
   password: 'SecurePass123'
 })
 
 if (result) {
-  console.log('Connecté!', result.user)
-  // Token auto-stocké dans localStorage
+  console.log('ConnectÃ©!', result.user)
+  // Token auto-stockÃ© dans localStorage
 }
 
-// ✅ Inscription
+// âœ… Inscription
 const newUser = await registerUser({
   email: 'new@example.com',
   password: 'SecurePass123',
@@ -69,7 +69,7 @@ const newUser = await registerUser({
   userType: 'job_seeker'
 })
 
-// ✅ Déconnexion
+// âœ… DÃ©connexion
 logoutUser() // Efface le token
 ```
 
@@ -78,16 +78,16 @@ logoutUser() // Efface le token
 ```typescript
 import { getJobOffers, getJobOfferById, createJobOffer } from '../services'
 
-// ✅ Récupérer toutes les offres
+// âœ… RÃ©cupÃ©rer toutes les offres
 const offers = await getJobOffers({
   status: 'open',
   limit: 10
 })
 
-// ✅ Récupérer une offre
+// âœ… RÃ©cupÃ©rer une offre
 const offer = await getJobOfferById('offerId')
 
-// ✅ Créer une offre (recruiter)
+// âœ… CrÃ©er une offre (recruiter)
 const newOffer = await createJobOffer({
   title: 'React Developer',
   description: 'Looking for...',
@@ -101,30 +101,30 @@ const newOffer = await createJobOffer({
 })
 ```
 
-### **API Client (avancé)**
+### **API Client (avancÃ©)**
 
 ```typescript
 import { apiRequest, setAuthToken, getAuthToken } from '../services'
 
-// ✅ Requête GET
+// âœ… RequÃªte GET
 const data = await apiRequest('/some-endpoint', {
   method: 'GET'
 })
 
-// ✅ Requête POST avec token
+// âœ… RequÃªte POST avec token
 const response = await apiRequest('/protected-endpoint', {
   method: 'POST',
   body: { key: 'value' },
   token: getAuthToken()
 })
 
-// ✅ Changer le token manuellement
+// âœ… Changer le token manuellement
 setAuthToken('new_token_here')
 ```
 
 ---
 
-## 🔐 Contexte d'Authentification
+## ðŸ” Contexte d'Authentification
 
 Le `AuthContext` utilise maintenant les services:
 
@@ -143,9 +143,9 @@ function MyComponent() {
     logout           // function
   } = useAuth()
 
-  // ✅ Utiliser l'état
+  // âœ… Utiliser l'Ã©tat
   if (isLoading) return <div>Connexion en cours...</div>
-  if (!isLoggedIn) return <div>Non connecté</div>
+  if (!isLoggedIn) return <div>Non connectÃ©</div>
 
   return <div>Bienvenue {userEmail}</div>
 }
@@ -153,7 +153,7 @@ function MyComponent() {
 
 ---
 
-## 🔑 Configuration
+## ðŸ”‘ Configuration
 
 Le fichier `.env.local` configure l'URL du backend:
 
@@ -168,13 +168,13 @@ VITE_API_URL=https://api.jobconnect.com
 
 ---
 
-## ✨ Fonctionnalités Clés
+## âœ¨ FonctionnalitÃ©s ClÃ©s
 
 ### **1. Gestion Automatique du Token**
 
-- Token stocké avant chaque requête
-- Envoyé automatiquement en header `Authorization: Bearer <token>`
-- Clair à la déconnexion
+- Token stockÃ© avant chaque requÃªte
+- EnvoyÃ© automatiquement en header `Authorization: Bearer <token>`
+- Clair Ã  la dÃ©connexion
 
 ### **2. Gestion des Erreurs**
 
@@ -189,30 +189,30 @@ if (!response.success) {
 ### **3. Persistance de Connexion**
 
 - Survit au rechargement de page
-- Données utilisateur dans `localStorage`
+- DonnÃ©es utilisateur dans `localStorage`
 - Token dans `localStorage`
 
 ---
 
-## 🧪 Tester l'Intégration
+## ðŸ§ª Tester l'IntÃ©gration
 
-### **Scénario 1: Connexion Admin**
+### **ScÃ©nario 1: Connexion Admin**
 
 1. Ouvrir http://localhost:5173
 2. Cliquer sur "Se connecter"
 3. Entrer:
    - Email: `legendino19@gmail.com`
    - Mot de passe: `DirtyDiana21022011`
-4. Vous devriez être redirigé au dashboard admin
+4. Vous devriez Ãªtre redirigÃ© au dashboard admin
 
-### **Scénario 2: Créer un Compte**
+### **ScÃ©nario 2: CrÃ©er un Compte**
 
 1. Cliquer sur "Inscrivez-vous"
 2. Remplir le formulaire
-3. Cliquer "Créer un compte"
-4. Vous êtes connecté et redirigé au dashboard
+3. Cliquer "CrÃ©er un compte"
+4. Vous Ãªtes connectÃ© et redirigÃ© au dashboard
 
-### **Scénario 3: Récupérer les Offres**
+### **ScÃ©nario 3: RÃ©cupÃ©rer les Offres**
 
 ```typescript
 // Dans un composant
@@ -225,41 +225,42 @@ useEffect(() => {
 
 ---
 
-## 🐛 Dépannage
+## ðŸ› DÃ©pannage
 
 **Erreur: "API Error"**
-- Vérifiez que le backend tourne: `npm run dev` dans `backend/`
-- Vérifiez `VITE_API_URL` dans `.env.local`
-- Vérifiez la console du navegador (F12)
+- VÃ©rifiez que le backend tourne: `npm run dev` dans `backend/`
+- VÃ©rifiez `VITE_API_URL` dans `.env.local`
+- VÃ©rifiez la console du navegador (F12)
 
 **Erreur: "Authorization failed"**
-- Token expiré: nouvellement connecté
-- Vérifiez que le token est stocké: `localStorage.getItem('authToken')`
+- Token expirÃ©: nouvellement connectÃ©
+- VÃ©rifiez que le token est stockÃ©: `localStorage.getItem('authToken')`
 
 **Erreur: "MongoDB Connection Error"**
-→ Voir le guide MongoDB Atlas (whitelist IP, etc.)
+â†’ Voir le guide MongoDB Atlas (whitelist IP, etc.)
 
 ---
 
-## 📝 Prochaines Étapes
+## ðŸ“ Prochaines Ã‰tapes
 
-1. ✅ **Intégrer les appels API** dans les composants existants
-2. ✅ **Récupérer les offres d'emploi** depuis le backend
-3. ✅ **Synchroniser les applications** d'emploi
-4. ✅ **Ajouter les notifications en temps réel** (WebSocket)
+1. âœ… **IntÃ©grer les appels API** dans les composants existants
+2. âœ… **RÃ©cupÃ©rer les offres d'emploi** depuis le backend
+3. âœ… **Synchroniser les applications** d'emploi
+4. âœ… **Ajouter les notifications en temps rÃ©el** (WebSocket)
 
 ---
 
-## 📌 Checklist Projet
+## ðŸ“Œ Checklist Projet
 
-- [x] Backend MongoDB connecté
-- [x] Services API créés
+- [x] Backend MongoDB connectÃ©
+- [x] Services API crÃ©Ã©s
 - [x] AuthContext utilise le backend
-- [x] AuthPage intégrée
-- [ ] TalentSearchPage intégrée
-- [ ] DashboardPage intégrée
+- [x] AuthPage intÃ©grÃ©e
+- [ ] TalentSearchPage intÃ©grÃ©e
+- [ ] DashboardPage intÃ©grÃ©e
 - [ ] Synchronisation bidirectionnelle
 
 ---
 
-**Tout fonctionne? 🎉 Passez à l'étape suivante !**
+**Tout fonctionne? ðŸŽ‰ Passez Ã  l'Ã©tape suivante !**
+

@@ -1,4 +1,4 @@
-# JobConnect API Documentation
+﻿# JobConnect API Documentation
 
 ## Base URL
 ```
@@ -251,3 +251,4 @@ API v1.0 - No versioning in URL yet.
 ---
 
 **Last Updated:** March 2026
+

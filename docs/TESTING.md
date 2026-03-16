@@ -1,4 +1,4 @@
-## Running Tests
+﻿## Running Tests
 
 Currently, no tests are configured. Tests should be added in the next phase.
 
@@ -29,3 +29,4 @@ npm run test:e2e
 ---
 
 **Add tests as part of the development phase.**
+

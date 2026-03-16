@@ -1,8 +1,8 @@
-# Roadmap - JobConnect
+﻿# Roadmap - JobConnect
 
 ## Q1 2026 - MVP Launch
 
-### Week 1-2: Architecture (✅ Complete)
+### Week 1-2: Architecture (âœ… Complete)
 - Project setup
 - Tech stack finalization
 - Database schema design
@@ -107,3 +107,4 @@
 ---
 
 **Last Updated:** March 7, 2026
+

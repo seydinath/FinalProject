@@ -1,4 +1,4 @@
-# JobConnect - Database Design
+﻿# JobConnect - Database Design
 
 ## Overview
 JobConnect uses MongoDB as the primary database. All models are defined using Mongoose ODM.
@@ -124,20 +124,20 @@ JobConnect uses MongoDB as the primary database. All models are defined using Mo
 
 ```
 User (Recruiter)
-  ├── 1:N → JobOffers (created by)
-  └── Recruiter reviews → Applications
+  â”œâ”€â”€ 1:N â†’ JobOffers (created by)
+  â””â”€â”€ Recruiter reviews â†’ Applications
 
 User (Candidate)
-  └── N:M → JobOffers (through Applications)
+  â””â”€â”€ N:M â†’ JobOffers (through Applications)
 
 JobOffer
-  ├── N:1 → User (recruiter)
-  └── 1:N → Applications
+  â”œâ”€â”€ N:1 â†’ User (recruiter)
+  â””â”€â”€ 1:N â†’ Applications
 
 Application
-  ├── N:1 → JobOffer
-  └── N:1 → User (candidate)
-  └── N:1 → User (reviewer/recruiter)
+  â”œâ”€â”€ N:1 â†’ JobOffer
+  â””â”€â”€ N:1 â†’ User (candidate)
+  â””â”€â”€ N:1 â†’ User (reviewer/recruiter)
 ```
 
 ---
@@ -240,3 +240,4 @@ Application.find({ candidate: candidateId })
 ---
 
 **Last Updated:** March 2026
+
