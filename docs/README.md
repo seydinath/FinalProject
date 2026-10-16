@@ -227,6 +227,8 @@ Contrôles vérifiés sur l'état actuel du projet:
 8. Gestion en temps reel des notifications
 <img width="1211" height="365" alt="image" src="https://github.com/user-attachments/assets/0ade827c-07f0-4e7d-ab3f-3d454b277dd4" />
 
+9. HOMEPAGE accueil candidat chercheur emploi 
+<img width="1065" height="1065" alt="image" src="https://github.com/user-attachments/assets/790123cc-be11-435c-8f56-9584cfdf7a03" />
 
 ## Documentation associée
 
