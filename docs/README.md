@@ -224,6 +224,9 @@ Contrôles vérifiés sur l'état actuel du projet:
 7. Gestions des rapports
 <img width="1263" height="495" alt="image" src="https://github.com/user-attachments/assets/a6ace36d-8552-4a4f-96fa-da0bfd76c70e" />
 
+8. Gestion en temps reel des notifications
+<img width="1211" height="365" alt="image" src="https://github.com/user-attachments/assets/0ade827c-07f0-4e7d-ab3f-3d454b277dd4" />
+
 
 ## Documentation associée
 
